@@ -1,6 +1,6 @@
 # Aquaeye
 
-![alt text](https://github.com/alexantao/aquaeye/blob/main/aquaeye-logo.jpg?raw=true)
+![aquaeye logo](https://github.com/alexantao/aquaeye/blob/main/aquaeye-logo.jpeg?raw=true)
 
 
 This is a Aquarium monitoring system.
