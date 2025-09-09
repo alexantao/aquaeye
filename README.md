@@ -1,2 +1,10 @@
-# aquaeye
-This is a aquarium monitoring system that monitors several parameters essential for the health of an aquarium, like: Water Level, Water PH, Canister Flux, Temperature, Ambient Light, etc. It integrates with Homeassistant and has a display for "off-line" check.
+# Aquaeye
+
+![alt text](https://github.com/alexantao/aquaeye/blob/main/aquaeye-logo.jpg?raw=true)
+
+
+This is a Aquarium monitoring system.
+It has a circuit board part, with some sensors (pH, Flux, Water Level and temperature) and the HomeAssistant part, that will show the values and control some equipment connected.
+
+It has a lot of improvements to make.
+
