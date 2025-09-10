@@ -57,11 +57,6 @@ It consists on two parts: hardware and software:
   * I also had to print a support for the sonic sensor and temperature from <a href="https://www.thingiverse.com/thing:5439668">https://www.thingiverse.com/thing:5439668</A>:
     <p align="center"><img src="https://github.com/alexantao/aquaeye/blob/main/images/suporte-sensor.jpg?raw=true" width="150"></p>
 
-**CODE**
-The circuit board, as it has a ESP32 core, it needs a firmware to run. I choose to run ESPHOME, because it is very easy to work woth and it is HomeAssistant compatible and easy to integrate.
-All codes are included inside this GitHub.
-
-
 **Schematic and PCB**
 The electronic schematic and PCB board I designed on EasyEDA. This is my very first project, so it may not be optimized and also may contain some error. 
 
@@ -69,9 +64,14 @@ The electronic schematic and PCB board I designed on EasyEDA. This is my very fi
 |---|:---:|---:|
 | <img src="https://github.com/alexantao/aquaeye/blob/main/images/esquematico.png?raw=true" width="150"> | <img src="https://github.com/alexantao/aquaeye/blob/main/images/2d-toplayer.png?raw=true" width="150"> | <img src="https://github.com/alexantao/aquaeye/blob/main/images/3D-PCB.png?raw=true" width="150"> |
 
+**ESPHOME CODE**
+The circuit board, as it has a ESP32 core, it needs a firmware to run. I choose to run ESPHOME, because it is very easy to work woth and it is HomeAssistant compatible and easy to integrate.
+All codes are included inside this GitHub.
 
 
-* **Software**
+* **Software (HomeAssistant)**
 
   Software is based on Homeassistant. As explained earlier, the HW uses a ESP32 module wich contains Wi-Fi and connects itself to a HomeAssistant instance.
   All parameters are configured there. If you will not use a HASSIO server, you will have in hardcode the parameters on Esphome.
+
+  <p align="center"><img src="https://github.com/alexantao/aquaeye/blob/main/images/panel.gif?raw=true" width="150"></p>
