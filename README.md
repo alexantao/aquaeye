@@ -25,21 +25,37 @@ It consists on two parts: hardware and software:
      <p align="center"><img src="https://github.com/alexantao/aquaeye/blob/main/images/dallas.jpeg?raw=true" width="150"></p>
      <hr width=50%>
   * Water Level: **HC-SR04** , **RCWL-1670**, **JSN-SR04T/AJ-SR04M**
- These are sensors that uses sonic waves to measure the distance. I tested these three:
+    
+    These are sensors that uses sonic waves to measure the distance. I tested these three:
 
-    | HC-SR04 | RCWL-1670 | SN-SR04T/AJ-SR04M |
+| HC-SR04 | RCWL-1670 | SN-SR04T/AJ-SR04M |
 |:-------------:|:--------------:|:--------------:|
 | <img src="https://github.com/alexantao/aquaeye/blob/main/images/sonic1.jpeg?raw=true" width="150"> | <img src="https://github.com/alexantao/aquaeye/blob/main/images/RCWL-1670.jpg?raw=true" width="150"> | <img src="https://github.com/alexantao/aquaeye/blob/main/images/sonic2.jpeg?raw=true" width="150"> |
 | The most simple of then, the board is attached with the sensors and gives a good precision. Measures distances for at most 2 meters and minimal of about 2cm. The problem with it is that it is not waterproof, and on of then got rusty in little time. | Identical from the HR-SR04, but it claims to be water proof. Only the sensor itself, of course. The board is not.  | This one is quite different, the sensor is water proof and the board is split from it. It's the same as those used in cars bumpers as parking sensor. The advantage is clearly the water proof design, but the board will take some extra space on the box. |
 
 
  <hr width=50%>
-    * Flux sensor: This is to monitor the water flux the canister is sending to the aquarium. For several times I noticed a low flow, due to obstruction of even a impeller fault. With this sensor I can even predict when I need to clean the canister, because the flow gets slower. There's a lot of flow sensors on the market, some with a open/close valve e others with temperature sensor included.
+  * Flux sensor: This is to monitor the water flux the canister is sending to the aquarium. For several times I noticed a low flow, due to obstruction of even a impeller fault. With this sensor I can even predict when I need to clean the canister, because the flow gets slower. There's a lot of flow sensors on the market, some with a open/close valve e others with temperature sensor included.
     
 | YF-B05 | YF-201c |
 |:---:|:---:|
 | <img src="https://github.com/alexantao/aquaeye/blob/main/images/yf-b05.jpeg?raw=true" width="150"> |  <img src="https://github.com/alexantao/aquaeye/blob/main/images/yf-201c.jpeg?raw=true" width="150">  |
 |  this sensor is made of metal and has a 3/4' (16mm) thread |  this sensor is made of plactis and has a 1/2' (13mm) thread |
+
+  * PH: **PH-4502C**
+    This sensor measures the PH of the water. The real measure it returns is a voltage acording the PH of the water. So, it must be calibrated properly so that the software interpret that Voltage and transform into a PH value. I still could not make it work properly, but it is included on the hardware for future utilization.
+    <p align="center"><img src="https://github.com/alexantao/aquaeye/blob/main/images/ph.jpeg?raw=true" width="150"></p>
+
+  * Light Sensor: **GY-302**
+    I added this sensor because one of my aquariums get sunlight on winter. When it happens, I can delay the aquarium light to turn on some hours.
+      <p align="center"><img src="https://github.com/alexantao/aquaeye/blob/main/images/gy-302.jpeg?raw=true" width="150"></p>
+
+  * OLED display **SSD1315**
+    I added this display so that we can see the sensors values even whenm the connection to HomeAssistant is not working
+      <p align="center"><img src="https://github.com/alexantao/aquaeye/blob/main/images/oled.jpg?raw=true" width="150"></p>
+      
+  * I also had to print a support for the sonic sensor and temperaturev from <a href="https://www.thingiverse.com/thing:5439668">https://www.thingiverse.com/thing:5439668</A>:
+    <p align="center"><img src="https://github.com/alexantao/aquaeye/blob/main/images/suporte-sensor.jpg?raw=true" width="150"></p>
 
 
 * **Software**
