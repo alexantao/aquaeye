@@ -54,8 +54,17 @@ It consists on two parts: hardware and software:
     I added this display so that we can see the sensors values even whenm the connection to HomeAssistant is not working
       <p align="center"><img src="https://github.com/alexantao/aquaeye/blob/main/images/oled.jpg?raw=true" width="150"></p>
       
-  * I also had to print a support for the sonic sensor and temperaturev from <a href="https://www.thingiverse.com/thing:5439668">https://www.thingiverse.com/thing:5439668</A>:
+  * I also had to print a support for the sonic sensor and temperature from <a href="https://www.thingiverse.com/thing:5439668">https://www.thingiverse.com/thing:5439668</A>:
     <p align="center"><img src="https://github.com/alexantao/aquaeye/blob/main/images/suporte-sensor.jpg?raw=true" width="150"></p>
+
+
+**Schematic and PCB** 
+The electronic schematic and PCB board I designed on EasyEDA. This is my very first project, so it may not be optimized and also may contain some error. 
+
+| Schematic | PCB (top layer) | 3D view |
+|---|:---:|---:|
+| <img src="https://github.com/alexantao/aquaeye/blob/main/images/esquematico.png?raw=true" width="150"> | <img src="https://github.com/alexantao/aquaeye/blob/main/images/2d-toplayer.png?raw=true" width="150"> | <img src="https://github.com/alexantao/aquaeye/blob/main/images/3D-PCB.png?raw=true" width="150"> |
+
 
 
 * **Software**
