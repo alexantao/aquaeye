@@ -1,4 +1,4 @@
-<p align="center"><img src="https://github.com/alexantao/aquaeye/blob/main/aquaeye-logo.jpeg?raw=true" width="350"></p>
+<p align="center"><img src="https://github.com/alexantao/aquaeye/blob/main/images/aquaeye-logo.jpeg?raw=true" width="350"></p>
 
 This is a Aquarium monitoring system.
 It has a circuit board part, with some sensors (pH, Flux, Water Level and temperature) and the HomeAssistant part, that will show the values and control some equipment connected.
