@@ -74,4 +74,13 @@ All codes are included inside this GitHub.
   Software is based on Homeassistant. As explained earlier, the HW uses a ESP32 module wich contains Wi-Fi and connects itself to a HomeAssistant instance.
   All parameters are configured there. If you will not use a HASSIO server, you will have in hardcode the parameters on Esphome.
 
-  <p align="center"><img src="https://github.com/alexantao/aquaeye/blob/main/images/panel.gif?raw=true" width="150"></p>
+  <p align="center"><img src="https://github.com/alexantao/aquaeye/blob/main/images/panel.gif?raw=true"></p>
+
+  I mounted a simple and visual panel to see and control the aquárium. It has a representation for all sensors and also some commands implemented.
+  These are the caracteristics:
+  1. The water level is shown with fluid-level and reflects the sensor that’s installed on the aquarium. There’s the possibility to make the refil automatic (I don’t have it… yet).
+  2. Canister flux is shown as a fan with the value below. I defined some severities, so that it will be red/green/orange depending on it’s level.
+  3. Clicking on the circulation pump, it is activated/deactivated and the fan icon spins green if it's on.
+  4. Clicking on the frog, activates/deactivates the air compressor connected to a frog that spits air in my aquarium. The water on the fluid changes, filled with bubbles, if it's on.
+  5. The CO2 cylinder shows the estimated level of gas. For this I created a helper to store the last fill and another that has the estimated duration. Clicking on the valve opens/closes the solenoid to liberate the gas. Clicking on the canister, the date is set to today, indicating the REFILL was done and the level is updated. I still plan to make HA calculate automatically the duration time by the median time between refils, but I couldn’t figure it out yet how to do that.
+
