@@ -1,7 +1,8 @@
 <p align="center"><img src="https://github.com/alexantao/aquaeye/blob/main/images/aquaeye-logo.jpeg?raw=true" width="350"></p>
 
-This is a Aquarium monitoring system.
-It has a circuit board part, with some sensors (pH, Flux, Water Level and temperature) and the HomeAssistant part, that will show the values and control some equipment connected.
+This is a Aquarium monitoring system. It has two essential parts:
+* **Hardware:** Circuit board, with some sensors (pH, Flux, Water Level and temperature)
+* **Software:** HomeAssistant, that will show the values and control some equipment connected.
 
 It has a lot of improvements to make.
 
@@ -11,10 +12,26 @@ It consists on two parts: hardware and software:
 
 * Hardware
 
-  The hardware is based on a ESP32-C3 Supermini module, wich contains all tecnology necessary to work with the sensors and also integrate with Homeassistant (see below).
+  The hardware is ehe heart of the system, is based on a ESP32-C3 Supermini module, wich contains all tecnology necessary to work with the sensors and also integrate with Homeassistant (see below).
   I designed a PCB with some connectors to the sensors and protections for the ESP32 module aginst short circuit from the sensors.
   Althrough I could power the ESP32 module directly on USB, and the sensors getting their power from the ESP32 module pins, I decided to power all of them directly from the external power source, to elmininate the possibility the module cannot send enouth energy for all sensors at once.
   With this modification, the module is still powered by USB (some does not accepts powering directly from the pin) and the sensors gets a dedicated circuit controlled by a TPS2553 to avoid short circuits, that if happens, the module will still work, the energy for the sensors are cut and a signal is sent to ESP32 and consequantly, HomeAssistant.
+
+  I use most cheap sensors that exists on the market, but must be careful, lots of those cheap harwdare are low quality. But the goal of this project is to make a affordable and reliable monitoring system.
+  We also have a lot os options related to sensors tyes. and below are a list of those I tested:
+
+  * Temperature Sensor: **DS18B20**
+    This sensor is water proof and measures the water temperature. Got some cheap ones that stopped working, but the measurement is quite good.
+     <p align="center"><img src="https://github.com/alexantao/aquaeye/blob/main/images/dallas.jpeg?raw=true" width="150"></p>
+  * Water Level: **HC-SR04** , **RCWL-1670**, **JSN-SR04T/AJ-SR04M**
+    These are sensors that uses sonic waves to measure the distance. I tested these three:
+     * HC-SR04 - the most simple of then, the board is attached with the sensors and gives a good precision. Measures distances for at most 2 meters and minimal of about 2cm. The problem with it is that it is not waterproof, and on of then got rusty in little time.      <p align="center"><img src="https://github.com/alexantao/aquaeye/blob/main/images/sonic1.jpeg?raw=true" width="150"></p>
+     * RCWL-1670 - identical from the HR-SR04, but it claims to be water proof. Only the sensor itself, of course. The board is not.
+   <p align="center"><img src="https://github.com/alexantao/aquaeye/blob/main/images/RCWL-1670.jpg?raw=true" width="150"></p>
+     * SN-SR04T/AJ-SR04M - this last one is quite different, because the sensor is water proof and the board is split from it. It's the same as those used in cars bumpers as parking sensor. The advantage is clearly the water proof design, but the board will take some extra space on the box. 
+
+
+  
 
 
 * Software
