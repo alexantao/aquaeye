@@ -65,9 +65,11 @@ The electronic schematic and PCB board I designed on EasyEDA. This is my very fi
 | <img src="https://github.com/alexantao/aquaeye/blob/main/images/esquematico.png?raw=true" width="150"> | <img src="https://github.com/alexantao/aquaeye/blob/main/images/2d-toplayer.png?raw=true" width="150"> | <img src="https://github.com/alexantao/aquaeye/blob/main/images/3D-PCB.png?raw=true" width="150"> |
 
 **ESPHOME CODE**
-The circuit board, as it has a ESP32 core, it needs a firmware to run. I choose to run ESPHOME, because it is very easy to work woth and it is HomeAssistant compatible and easy to integrate.
+
+  The circuit board, as it has a ESP32 core, it needs a firmware to run. I choose to run ESPHOME, because it is very easy to work woth and it is HomeAssistant compatible and easy to integrate.
 All codes are included inside this GitHub.
 
+<hr width=80%>
 
 * **Software (HomeAssistant)**
 
@@ -83,4 +85,22 @@ All codes are included inside this GitHub.
   3. Clicking on the circulation pump, it is activated/deactivated and the fan icon spins green if it's on.
   4. Clicking on the frog, activates/deactivates the air compressor connected to a frog that spits air in my aquarium. The water on the fluid changes, filled with bubbles, if it's on.
   5. The CO2 cylinder shows the estimated level of gas. For this I created a helper to store the last fill and another that has the estimated duration. Clicking on the valve opens/closes the solenoid to liberate the gas. Clicking on the canister, the date is set to today, indicating the REFILL was done and the level is updated. I still plan to make HA calculate automatically the duration time by the median time between refils, but I couldn’t figure it out yet how to do that.
+  6. The light still has the basic on/of behavior, but I intend to reflect the intensity later making it opaque/transparent. My tries didn´t work.
+  7. UV light on/off clicking on it.
+  8. pH level will reflect the sensor reading. But I need a more representable gauge. I’m using the custom:pool-monitor-card because it was the closest I need, but I will look for another one better.
+  9. Temperature bar: reflects the temperature sensor
+
+Todo:
+
+Better light control, reflecting the brightness level, changing the opacity
+
+better pH gauge.
+
+Better positioning. Still learning how to do this correctly. I’m having issues when accessing in little screens, such as a phone.
+
+Controls to turn on devices not in the picture.
+
+Adjust temperature bar
+
+Show other parameters (amnonia, nitrite, nitrate, etc…)
 
