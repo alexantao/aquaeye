@@ -69,7 +69,7 @@ The electronic schematic and PCB board I designed on EasyEDA. This is my very fi
 
 </div>
 
-### **PROJECT FILES AND ESPHOME CODE**
+# **PROJECT FILES AND ESPHOME CODE**
 
   The circuit board, as it has a ESP32 core, it needs a firmware to run. I choose to run ESPHOME, because it is very easy to work woth and it is HomeAssistant compatible and easy to integrate.
 The files included inside this GitHub are in <a href="https://github.com/alexantao/aquaeye/tree/main/code">code directory</a>:
@@ -99,17 +99,35 @@ The files included inside this GitHub are in <a href="https://github.com/alexant
   8. pH level will reflect the sensor reading. But I need a more representable gauge. I’m using the custom:pool-monitor-card because it was the closest I need, but I will look for another one better.
   9. Temperature bar: reflects the temperature sensor
 
+All configuration for AquaEye project and anything related to the aquarium are configurated in this panel:
+  <p align="center"><img src="https://github.com/alexantao/aquaeye/blob/main/images/panel-config.png?raw=true"></p>
+
+
 Todo:
 
-Better light control, reflecting the brightness level, changing the opacity
+* Better light control, reflecting the brightness level, changing the opacity
+* better pH gauge.
+* Better positioning. Still learning how to do this correctly. I’m having issues when accessing in little screens, such as a phone.
+* Controls to turn on devices not in the picture.
+* Adjust temperature bar
+* Show other parameters (amnonia, nitrite, nitrate, etc…)
 
-better pH gauge.
+  
+# HOMEASSISTANT CONFIGURATION
 
-Better positioning. Still learning how to do this correctly. I’m having issues when accessing in little screens, such as a phone.
+Homeassistant configuration is complex (and not yet fully developped).
+I'll try to make it simple by making YAML files to be included on _configuration.yaml_ file. The idea is to use packages feature: 
+1. Create a _packages_ directory inside HomeAssistant config dir;
+2. copy YAML files there (careful, there's YAML for ESPHOME and for HomeAssistant);
+3. inside _configuration.yaml_, include the statements:
+   ```
+    packages: !include_dir_named packages
+   ```
+4. Check and restart HomeAssistant.
 
-Controls to turn on devices not in the picture.
-
-Adjust temperature bar
-
-Show other parameters (amnonia, nitrite, nitrate, etc…)
+Code files are located at: <A HREF="https://github.com/alexantao/aquaeye/tree/main/code">https://github.com/alexantao/aquaeye/tree/main/code</A>
+   
+Here, we need a lot of files forconfiguration inside HomeAssistant, like helpers. I'll try to make a file for each configuration and you should use then to create yours:
+* helpers.yaml: csv with configuration of helpers used by lovelace in HA (input_numbers, timers, etc...)
+* 
 
