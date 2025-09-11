@@ -10,7 +10,7 @@ It has a lot of improvements to make.
 
 It consists on two parts: hardware and software:
 
-* **Hardware**
+## **Hardware**
 
   The hardware is ehe heart of the system, is based on a ESP32-C3 Supermini module, wich contains all tecnology necessary to work with the sensors and also integrate with Homeassistant (see below).
   I designed a PCB with some connectors to the sensors and protections for the ESP32 module aginst short circuit from the sensors.
@@ -57,7 +57,7 @@ It consists on two parts: hardware and software:
   * I also had to print a support for the sonic sensor and temperature from <a href="https://www.thingiverse.com/thing:5439668">https://www.thingiverse.com/thing:5439668</A>:
     <p align="center"><img src="https://github.com/alexantao/aquaeye/blob/main/images/suporte-sensor.jpg?raw=true" width="150"></p>
 
-**Schematic and PCB**
+### **Schematic and PCB**
 
 The electronic schematic and PCB board I designed on EasyEDA. This is my very first project, so it may not be optimized and also may contain some error. 
 
@@ -69,7 +69,7 @@ The electronic schematic and PCB board I designed on EasyEDA. This is my very fi
 
 </div>
 
-**ESPHOME CODE**
+### **PROJECT FILES AND ESPHOME CODE**
 
   The circuit board, as it has a ESP32 core, it needs a firmware to run. I choose to run ESPHOME, because it is very easy to work woth and it is HomeAssistant compatible and easy to integrate.
 The files included inside this GitHub are in <a href="https://github.com/alexantao/aquaeye/tree/main/code">code directory</a>:
@@ -79,14 +79,15 @@ The files included inside this GitHub are in <a href="https://github.com/alexant
 
 <hr width=80%>
 
-* **Software (HomeAssistant)**
+## **Software (HomeAssistant)**
 
-  Software is based on Homeassistant. As explained earlier, the HW uses a ESP32 module wich contains Wi-Fi and connects itself to a HomeAssistant instance.
+  Software is based on Homeassistant.
+  As explained earlier, the HW uses a ESP32 module wich contains Wi-Fi and connects itself to a HomeAssistant instance.
   All parameters are configured there. If you will not use a HASSIO server, you will have in hardcode the parameters on Esphome.
 
   <p align="center"><img src="https://github.com/alexantao/aquaeye/blob/main/images/panel.gif?raw=true"></p>
 
-  I mounted a simple and visual panel to see and control the aquárium. It has a representation for all sensors and also some commands implemented.
+  I mounted a simple and visual panel to see and control the aquarium. It has a representation for all sensors and also some commands implemented.
   These are the caracteristics:
   1. The water level is shown with fluid-level and reflects the sensor that’s installed on the aquarium. There’s the possibility to make the refil automatic (I don’t have it… yet).
   2. Canister flux is shown as a fan with the value below. I defined some severities, so that it will be red/green/orange depending on it’s level.
