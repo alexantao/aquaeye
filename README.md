@@ -77,12 +77,30 @@ The files included inside this GitHub are in <a href="https://github.com/alexant
 * **Gerber-.zip:** the gerber files to use
 * **AquaEye-.epro:** Project file used in EaseEDA Pro
 
+# Installation
+
+With the hardware ready, get a 5V power source with a Jack 4p with at least 500mA. Aquaeye does not drain too much current.
+You will need to flash Firmware first (refer to ESPHOME flashing procedures, its very simple, you will need only to plug a USB data cable to your computer to flash it) , and configure the WIFI.
+Plug all sensors you will use **BEFORE** turning it on. Some sensors, like Dallas, requires to be connected on bootup sequence to be recognized.
+After that, the system will automatically monitor your aquarium. 
+
+The next step is HomeAssistant configuration.
+
 <hr width=80%>
 
 ## **Software (HomeAssistant)**
 
   Software is based on Homeassistant.
   As explained earlier, the HW uses a ESP32 module wich contains Wi-Fi and connects itself to a HomeAssistant instance.
+
+  ### **ADD-ON or INTEGRATION**
+  For that, you will need to install ESPHOME Add-On (or integration, for the docker version). Click on below button to see and install:
+   <p align="center"><A href="https://my.home-assistant.io/redirect/supervisor_addon/?addon=5c53de3b_esphome&repository_url=https%3A%2F%2Fgithub.com%2Fesphome%2Fhome-assistant-addon"><img src="https://github.com/alexantao/aquaeye/blob/main/images/supervisor_addon.svg?raw=true"></A> </p>
+
+  After that, it should automatically find the Device on your network, if you configured it properly. If it does not apear, try to discover it's IP Address on your AccessPoint and tray to mannually add it.
+
+  ### Lovelace Card
+  
   All parameters are configured there. If you will not use a HASSIO server, you will have in hardcode the parameters on Esphome.
 
   <p align="center"><img src="https://github.com/alexantao/aquaeye/blob/main/images/panel.gif?raw=true"></p>
@@ -116,7 +134,10 @@ Todo:
 # HOMEASSISTANT CONFIGURATION
 
 Homeassistant configuration is complex (and not yet fully developped).
-I'll try to make it simple by making YAML files to be included on _configuration.yaml_ file. The idea is to use packages feature: 
+I'll try to make it simple by making YAML files to be included on _configuration.yaml_ file. 
+See README file inside the code directory for a description of each.
+
+The idea is to use HA packages feature: 
 1. Create a _packages_ directory inside HomeAssistant config dir;
 2. copy YAML files there (careful, there's YAML for ESPHOME and for HomeAssistant);
 3. inside _configuration.yaml_, include the statements:
@@ -127,7 +148,3 @@ I'll try to make it simple by making YAML files to be included on _configuration
 
 Code files are located at: <A HREF="https://github.com/alexantao/aquaeye/tree/main/code">https://github.com/alexantao/aquaeye/tree/main/code</A>
    
-Here, we need a lot of files forconfiguration inside HomeAssistant, like helpers. I'll try to make a file for each configuration and you should use then to create yours:
-* helpers.yaml: csv with configuration of helpers used by lovelace in HA (input_numbers, timers, etc...)
-* 
-
