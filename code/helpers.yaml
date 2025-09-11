@@ -57,35 +57,48 @@ input_number:
     unit_of_measurement: mV
     mode: box
     icon: mdi:gauge-full
+    
+  vazao_canister:
+    name: AquaEye - Canister MaxFlow
+    initial: 500
+    min: 0
+    max: 5000
+    step: 1
+    unit_of_measurement: L/h
+    mode: box
+    icon: mdi:waves
 
 input_select:
   c_calib_ph4:
     name: AquaEye - Calibration ph4
     options:
       - 4.00
-      -4.01
+      - 4.01
     initial: 4.00
     icon: mdi:adjust
 
-----------------------------------------
+  c_calib_ph7:
+    name: AquaEye - Calibration ph7
+    options:
+      - 6.86
+      - 7.00
+      - 7.01
+    initial: 6.86
+    icon: mdi:adjust
 
+  c_calib_ph9_10:
+    name: AquaEye - Calibration ph9-10
+    options:
+      - 9.00
+      - 9.18
+      - 9.21
+      - 10.00
+      - 10.01
+    initial: 9.00
+    icon: mdi:adjust
 
-Calibração pH7
-aquários
-input_select.c_calib_ph7
-Entrada de seleção
-
-Calibração pH9-10
-aquários
-input_select.c_calib_ph9_10
-Entrada de seleção
-
-Modo de Calibração
-aquários
-input_boolean.calib_ph
-Entrada booleana
-
-Vazão do Canister
-aquários
-input_number.vazao_canister
-Entrada numérica
+input_boolean:
+  calib_ph:
+    name: Calibration Mode
+    icon: mdi:knob
+    initial: false
