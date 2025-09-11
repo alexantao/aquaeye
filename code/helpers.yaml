@@ -1,5 +1,5 @@
 input_number:
-  input_number.sonic_offset:
+  sonic_offset:
     name: AquaEye - Sensor to Water Distance
     initial: 30
     min: 0
@@ -9,7 +9,7 @@ input_number:
     unit_of_measurement: mm
     icon: mdi:leak
 
-  input_number.coluna_agua_total:
+  coluna_agua_total:
     name: AquaEye - Water Column 
     initial: 30
     min: 0
@@ -19,7 +19,7 @@ input_number:
     unit_of_measurement: mm
     icon: mdi:water-circle
 
-   input_number.freq_fluxo:
+  freq_fluxo:
     name: AquaEye - Flux Sensor Factor
     initial: 6
     min: 0
@@ -28,32 +28,47 @@ input_number:
     mode: box
     icon: mdi:slash-forward
    
-   input_number.v_calib_mv4:
+  v_calib_mv4:
     name: AquaEye - Calibration mV 4
     initial: 3
     min: 0
     max: 3,3
-    step: 0,001
-    unit_of_measurement: V
+    step: 0,00001
+    unit_of_measurement: mV
     mode: box
     icon: mdi:gauge-empty
 
+  v_calib_mv7:
+    name: AquaEye - Calibration mV 7
+    initial: 3
+    min: 0
+    max: 3,3
+    step: 0,00001
+    unit_of_measurement: mV
+    mode: box
+    icon: mdi:gauge
+
+  v_calib_mv9:
+    name: AquaEye - Calibration mV 9
+    initial: 3
+    min: 0
+    max: 3,3
+    step: 0,00001
+    unit_of_measurement: mV
+    mode: box
+    icon: mdi:gauge-full
+
+input_select:
+  c_calib_ph4:
+    name: AquaEye - Calibration ph4
+    options:
+      - 4.00
+      -4.01
+    initial: 4.00
+    icon: mdi:adjust
+
 ----------------------------------------
 
-Calibração mV a 7
-aquários
-input_number.v_calib_mv7
-Entrada numérica
-
-Calibração mV a 9
-aquários
-input_number.v_calib_mv9
-Entrada numérica
-
-Calibração pH4
-aquários
-input_select.c_calib_ph4
-Entrada de seleção
 
 Calibração pH7
 aquários
