@@ -61,18 +61,21 @@ It consists on two parts: hardware and software:
 
 The electronic schematic and PCB board I designed on EasyEDA. This is my very first project, so it may not be optimized and also may contain some error. 
 
-<p align="center">
+<div align="center">
 
 | Schematic | PCB (top layer) | 3D view |
-|---|:---:|---:|
+|---|:---:|:---:|
 | <img src="https://github.com/alexantao/aquaeye/blob/main/images/esquematico.png?raw=true" width="150"> | <img src="https://github.com/alexantao/aquaeye/blob/main/images/2d-toplayer.png?raw=true" width="150"> | <img src="https://github.com/alexantao/aquaeye/blob/main/images/3D-PCB.png?raw=true" width="150"> |
 
-</p>
+</div>
 
 **ESPHOME CODE**
 
   The circuit board, as it has a ESP32 core, it needs a firmware to run. I choose to run ESPHOME, because it is very easy to work woth and it is HomeAssistant compatible and easy to integrate.
-All codes are included inside this GitHub inside code directory, as name  <a href="aquaeye.yaml">aquaeye.yaml</a>.
+The files included inside this GitHub are in <a href="https://github.com/alexantao/aquaeye/tree/main/code">code directory</a>:
+* **aquaeye.yaml:** the ESPHome code I used to program the device
+* **Gerber*.zip:** the gerber files to use
+* **AquaEye*.epro:** Project file used in EaseEDA Pro
 
 <hr width=80%>
 
