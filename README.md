@@ -74,8 +74,8 @@ The electronic schematic and PCB board I designed on EasyEDA. This is my very fi
   The circuit board, as it has a ESP32 core, it needs a firmware to run. I choose to run ESPHOME, because it is very easy to work woth and it is HomeAssistant compatible and easy to integrate.
 The files included inside this GitHub are in <a href="https://github.com/alexantao/aquaeye/tree/main/code">code directory</a>:
 * **aquaeye.yaml:** the ESPHome code I used to program the device
-* **Gerber*.zip:** the gerber files to use
-* **AquaEye*.epro:** Project file used in EaseEDA Pro
+* **Gerber-.zip:** the gerber files to use
+* **AquaEye-.epro:** Project file used in EaseEDA Pro
 
 <hr width=80%>
 
