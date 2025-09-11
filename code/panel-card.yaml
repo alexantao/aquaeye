@@ -1,0 +1,502 @@
+type: picture-elements
+image: /local/itens/aquario-fundo.png
+elements:
+  - type: image
+    title: Aquecedor
+    tap_action:
+      action: none
+    state_image:
+      "on": /local/itens/aquario-aquecedor-LIG.png
+    style:
+      z-index: 1
+      left: "0"
+      top: "0"
+      transform: none
+  - type: custom:pool-monitor-card
+    display:
+      compact: true
+      show_labels: false
+      show_units: false
+      language: pt-br
+      setpoint: 6.8
+    sensors:
+      ph:
+        - entity: sensor.ph_aquario_da_sala
+    style:
+      z-index: 1
+      top: 77%
+      left: 50%
+      width: 40%
+  - type: custom:fluid-level-background-card
+    entity: sensor.co2_sala_nivel
+    background_color: transparent
+    show_state: true
+    show_icon: false
+    full_value: 100
+    severity:
+      - value: 0
+        color: red
+      - value: 30
+        color: yellow
+      - value: 80
+        color: rgba(80, 80, 60, 1)
+    style:
+      z-index: 3
+      top: 78%
+      left: 10.4%
+      width: 6.3%
+      height: 60%
+    card_mod:
+      style: |
+        ha-card {
+          text-align: center;
+          --ha-card-border-color: transparent !important;
+          box-shadow: none !important;
+          background: none !important;
+          border-radius: 10px;
+          overflow: hidden;
+        }  
+        #container, .container {
+          width: 100% !important;
+          height: 40% !important;
+          position: relative !important;
+          border-radius: 14px !important;
+          margin-left: 0%;
+          margin-top: 0%;
+          opacity: 0.4;
+          overflow: hidden;
+        }
+    card:
+      type: custom:button-card
+      entity: sensor.co2_sala_nivel
+      title_template: "{{ states('sensor.co2_sala_nivel')|round(0) }} %"
+      show_header_toggle: false
+      show_name: false
+      show_icon: false
+      show_title: true
+      style:
+        z-index: 0
+      tap_action:
+        action: call-service
+        confirmation:
+          text: Marcar hoje como dia de recarga ?
+        service: input_datetime.set_datetime
+        service_data:
+          entity_id: input_datetime.dia_reabastecimento_co2_sala
+          date: "[[[ return new Date().toLocaleDateString('en-CA') ]]]"
+        value: "off"
+      card_mod:
+        style: |
+          ha-card {
+           --ha-card-header-font-size: 20px;
+             height: 100px !important;
+             color: white;
+             font-weight: 800;
+          }
+          .card-header {
+           justify-content: center !important;
+          }
+          .name {
+           overflow: unset !important;
+            }
+  - type: image
+    entity: switch.alimentador_sala
+    title: Alimentar Peixinhos
+    tap_action:
+      action: toggle
+    state_image:
+      "on": /local/itens/feeder.png
+      "off": /local/itens/feeder-off.png
+      unknown: /local/itens/feeder-off.png
+    style:
+      z-index: 3
+      left: 12%
+      top: 0.5%
+      transform: scale(0.2, 0.2) translate(-50%, -50%)
+  - type: image
+    entity: switch.aquario_sala_aeracao
+    title: Aeração do Aquário
+    tap_action:
+      action: toggle
+    state_image:
+      "on": /local/itens/sapo-ligado.png
+      "off": /local/itens/sapo-desligado.png
+    style:
+      z-index: 3
+      left: 50%
+      top: 35%
+      transform: scale(0.2, 0.2) translate(-50%, -50%)
+  - type: image
+    entity: switch.aquario_sala_uv
+    title: Luz UV
+    tap_action:
+      action: toggle
+    state_image:
+      "on": /local/itens/uv-ligada.png
+      "off": /local/itens/uv-desligada.png
+    style:
+      z-index: 2
+      left: "-8%"
+      top: "-5%"
+      transform: scale(0.1, 0.1) translate(-50%, -50%)
+  - type: state-label
+    entity: sensor.tempo_restante_luz_da_sala
+    style:
+      z-index: 3
+      left: 35%
+      top: 9%
+      color: lightgreen
+      font-size: 200%
+    conditions:
+      - entity: sensor.tempo_restante_luz_da_sala
+        state_not: "00:00"
+  - type: custom:slider-entity-row
+    entity: light.luz_do_aquario
+    style:
+      z-index: 3
+      left: 50%
+      top: 9%
+    card_mod:
+      style: |
+        ha-card {
+         --ha-card-header-font-size: 20px;
+           height: 100px !important;
+           color: white;
+           font-weight: 800;
+        }
+        .card-header {
+         justify-content: center !important;
+        }
+        .name {
+         overflow: unset !important;
+        }
+  - type: image
+    entity: light.luz_do_aquario
+    tap_action: none
+    hold_action: none
+    state_image:
+      "on": /local/itens/luz-ligada.png
+      "off": /local/itens/luz-desligada.png
+    style:
+      z-index: 2
+      top: "-12%"
+      width: 100%
+      transform: scale(0.7, 0.7) translate(0%, 0%)
+      opacity: ${ vars[0] / 255.0 }
+  - type: image
+    image: /local/itens/circulação.png
+    style:
+      z-index: 2
+      top: 65%
+      left: 80%
+      height: 28%
+      transform: scale(0.6, 0.6) translate(-50%, -50%)
+  - type: image
+    entity: switch.aquario_co2
+    title: CO2 - Clique na válvula para ligar/desligar
+    tap_action:
+      action: toggle
+    state_image:
+      "on": /local/itens/co2-cilindro-ON.png
+      "off": /local/itens/co2-cilindro-OFF.png
+    style:
+      z-index: 2
+      top: "-10%"
+      left: "-13%"
+      transform: scale(0.2, 0.2) translate(-50%, -50%)
+  - type: conditional
+    conditions:
+      - entity: input_boolean.aquaeye_ui_config
+        state: "on"
+    elements:
+      - type: custom:hui-element
+        card_type: vertical-stack
+        cards:
+          - type: horizontal-stack
+            cards:
+              - type: entities
+                title: Sensores
+                entities:
+                  - entity: input_number.coluna_agua_total_sala
+                    name: Coluna de Água
+                  - entity: input_number.sonic_offset_sala
+                    name: Distância do Sensor
+                  - entity: input_number.freq_fluxo_sala
+                    name: Fator do Sensor de Fluxo
+                  - entity: input_number.vazao_canister
+                    name: Vazão do Fluxo
+              - type: entities
+                title: Equipamentos
+                entities:
+                  - entity: input_number.aquario_max_luz
+                    name: Máx Luz
+                  - entity: input_number.aquario_sala_tempo_circulacao
+                    name: Tempo Circ.
+                  - entity: input_number.aquario_tempo_da_aeracao
+                    name: tempo Aera.
+                  - entity: input_number.fader_luz_sala
+                    name: Tempo Fader
+          - type: horizontal-stack
+            cards:
+              - type: entities
+                title: pH - Temp Sala / Calibração
+                entities:
+                  - entity: sensor.aquaeye_sala_ph_ads
+                    name: pH V
+                  - entity: sensor.ph_aquario_da_sala
+                  - entity: sensor.aquaeye_sala_temperatura
+                  - entity: input_boolean.calib_ph
+              - type: entities
+                title: Calibração pH Sala
+                entities:
+                  - entity: input_select.c_calib_ph4
+                  - entity: input_number.v_calib_mv4
+                    name: mV4
+                  - type: divider
+                  - entity: input_select.c_calib_ph7
+                  - entity: input_number.v_calib_mv7
+                    name: mV7
+                  - type: divider
+                  - entity: input_select.c_calib_ph9_10
+                  - entity: input_number.v_calib_mv9
+                    name: mV9-10
+                visibility:
+                  - condition: state
+                    entity: input_boolean.calib_ph
+                    state: "on"
+        style:
+          z-index: 3
+          top: 35%
+          left: 30%
+  - type: custom:button-card
+    entity: input_boolean.aquaeye_ui_config
+    icon: mdi:tune-vertical
+    show_title: false
+    show_name: false
+    title: Configurações
+    tap_action:
+      action: toggle
+    style:
+      z-index: 3
+      top: 5%
+      left: 5%
+      height: 8%
+    styles:
+      icon:
+        - width: 40%
+        - color: red
+    card_mod:
+      style: |
+        ha-card {
+          text-align: center;
+          --ha-card-border-color: transparent !important;
+          box-shadow: none !important;
+          background: none !important;
+          border-radius: 10px;
+          overflow: hidden;
+        }
+  - type: custom:button-card
+    entity: switch.circulacao_aquario
+    icon: mdi:fan
+    show_name: false
+    title: Liga/Desliga Circulação
+    style:
+      z-index: 3
+      top: 67.5%
+      left: 82%
+      height: 8%
+    styles:
+      icon:
+        - width: 40%
+      card:
+        - "--mdc-ripple-press-opacity": 0
+    state:
+      - value: "on"
+        styles:
+          icon:
+            - animation: rotating 1s linear infinite
+            - color: green
+      - value: "off"
+        styles:
+          icon:
+            - animation: none
+            - color: red
+    card_mod:
+      style: |
+        ha-card {
+          text-align: center;
+          --ha-card-border-color: transparent !important;
+          box-shadow: none !important;
+          background: none !important;
+          border-radius: 10px;
+          overflow: hidden;
+        }
+  - type: custom:button-card
+    entity: sensor.aquaeye_sala_fluxo_por_hora
+    icon: mdi:fan
+    tap_action: none
+    tltle: Fluxo do Filtro
+    show_label: true
+    label: L/h
+    show_name: false
+    show_state: true
+    state_display: "[[[ return Math.round(Number(entity.state)).toFixed(0); L/H ]]]"
+    style:
+      z-index: 1
+      top: 23%
+      left: 74%
+      height: 8%
+    styles:
+      label:
+        - align-self: middle
+        - color: black
+      state:
+        - align-self: middle
+        - color: black
+      card:
+        - font-size: 15px
+        - font-weight: bold
+      icon:
+        - color: |
+            [[[
+              if (entity.state < 300) return 'red';
+              if (entity.state >= 300 && entity.state < 649) return 'orange';
+              else return 'green';
+            ]]]
+        - width: 30%
+        - animation: rotating 1s linear infinite
+    card_mod:
+      style: |
+        ha-card {
+          text-align: center;
+          --ha-card-border-color: transparent !important;
+          box-shadow: none !important;
+          background: none !important;
+          border-radius: 10px;
+          overflow: hidden;
+        }  
+  - type: custom:bar-card
+    animation: "on"
+    bar-card-color: transparent
+    bar-card-border-radius: 0
+    direction: up
+    entity_row: true
+    icon: false
+    max: 32
+    width: 8%
+    unit_of_measurement: ºC
+    positions:
+      icon: "off"
+      name: "off"
+      value: outside
+    style:
+      z-index: 1
+      top: 38.5%
+      left: 17.3%
+    severity:
+      - color: Red
+        from: 0
+        to: 24
+      - color: Orange
+        from: 24.1
+        to: 25
+      - color: Green
+        from: 25.1
+        to: 27.9
+      - color: Red
+        from: 28
+        to: 31
+    card_mod:
+      style: |
+        ha-card {
+              --ha-card-border-width: 0px;
+              vertical-align: middle;
+              text-align: center;
+        }
+        bar-card-value {
+          margin-top: auto;
+          font-size: 16px;
+          font-weight: bold;
+          text-shadow: 1px 1px #0005;
+          text-orientation: mixed;
+          transform-origin: 0 0;
+          transform: rotate(270deg);
+          color: black;
+        }
+        bar-card-max {
+          margin: 0px;
+          margin-left: auto;
+          margin-top: -20px;
+          top: 10px;
+        }
+    entities:
+      - entity: sensor.aquaeye_sala_temperatura
+  - type: custom:fluid-level-background-card
+    entity: sensor.aquaeye_sala_nivel_da_agua
+    fill_entity: switch.aquario_sala_aeracao
+    background_color: transparent
+    show_state: true
+    show_icon: false
+    camera_view: auto
+    level_color: rgba(82, 171, 255, 1)
+    style:
+      z-index: 2
+      top: 80%
+      left: 65%
+      width: 100%
+      height: 110%
+    card_mod:
+      style: |
+        ha-card {
+          text-align: center;
+          --ha-card-border-color: transparent !important;
+          box-shadow: none !important;
+          background: none !important;
+          border-radius: 10px;
+          overflow: hidden;
+        }  
+        #container, .container {
+          width: 71% !important;
+          height: 40% !important;
+          position: relative !important;
+          border-radius: 14px !important;
+          margin-left: 0%;
+          margin-top: 0%;
+          opacity: 0.4;
+          overflow: hidden;
+        }
+    card:
+      type: custom:card-templater
+      card:
+        type: entity
+        entity: sensor.aquaeye_sala_nivel_da_agua
+        title_template: "{{ states(''sensor.aquaeye_sala_nivel'')|round(0) }} %"
+        unit_of_measurement: "%"
+        show_header_toggle: false
+        show_name: false
+        show_icon: false
+        show_title: true
+        name: " "
+        positions:
+          value: "off"
+        card_mod:
+          style: |
+            ha-card {
+             --ha-card-header-font-size: 20px;
+               height: 100px !important;
+               color: black;
+               font-weight: 800;
+            }
+            .card-header {
+             justify-content: center !important;
+            }
+            .name {
+             overflow: unset !important;
+            }
+grid_options:
+  columns: 24
+  rows: auto
+visibility:
+  - condition: state
+    entity: input_boolean.ui_painel_sala
+    state: "on"
