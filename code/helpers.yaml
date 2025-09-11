@@ -1,0 +1,76 @@
+input_number:
+  input_number.sonic_offset:
+    name: AquaEye - Sensor to Water Distance
+    initial: 30
+    min: 0
+    max: 1000
+    step: 1
+    mode: box
+    unit_of_measurement: mm
+    icon: mdi:leak
+
+  input_number.coluna_agua_total:
+    name: AquaEye - Water Column 
+    initial: 30
+    min: 0
+    max: 1000
+    step: 1
+    mode: box
+    unit_of_measurement: mm
+    icon: mdi:water-circle
+
+   input_number.freq_fluxo:
+    name: AquaEye - Flux Sensor Factor
+    initial: 6
+    min: 0
+    max: 100
+    step: 0,1
+    mode: box
+    icon: mdi:slash-forward
+   
+   input_number.v_calib_mv4:
+    name: AquaEye - Calibration mV 4
+    initial: 3
+    min: 0
+    max: 3,3
+    step: 0,001
+    unit_of_measurement: V
+    mode: box
+    icon: mdi:gauge-empty
+
+----------------------------------------
+
+Calibração mV a 7
+aquários
+input_number.v_calib_mv7
+Entrada numérica
+
+Calibração mV a 9
+aquários
+input_number.v_calib_mv9
+Entrada numérica
+
+Calibração pH4
+aquários
+input_select.c_calib_ph4
+Entrada de seleção
+
+Calibração pH7
+aquários
+input_select.c_calib_ph7
+Entrada de seleção
+
+Calibração pH9-10
+aquários
+input_select.c_calib_ph9_10
+Entrada de seleção
+
+Modo de Calibração
+aquários
+input_boolean.calib_ph
+Entrada booleana
+
+Vazão do Canister
+aquários
+input_number.vazao_canister
+Entrada numérica
