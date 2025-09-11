@@ -100,7 +100,7 @@ The files included inside this GitHub are in <a href="https://github.com/alexant
   9. Temperature bar: reflects the temperature sensor
 
 All configuration for AquaEye project and anything related to the aquarium are configurated in this panel:
-  <p align="center"><img src="https://github.com/alexantao/aquaeye/blob/main/images/panel-config.png?raw=true"></p>
+  <p align="center"><img src="https://github.com/alexantao/aquaeye/blob/main/images/painel-config.png?raw=true"></p>
 
 
 Todo:
