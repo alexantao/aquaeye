@@ -1,0 +1,345 @@
+substitutions:
+  device_name: "aquaeye-sala"
+  friendly_name: "AquaEye-Sala"
+  dns: "aquaeye-sala.casa"
+
+  # TEMPOS DOS SENSORES
+  flux_time: "60"
+  ph_time: "60s"
+  temp_time: "60s"
+  level_time: "60s"
+
+  # PINOS 
+  flux_pin: "GPIO10"
+  temp_pin: "GPIO1"
+  dist_pin_eco: "GPIO3"
+  dist_pin_trig: "GPIO4"
+  ph_pin:  "GPIO2"
+  scl_pin: "GPIO9"
+  sda_pin: "GPIO8"
+
+packages: 
+  device_base: !include common/device_base.yaml
+  wifi: !include common/wifi.yaml
+
+######################################################################
+
+esp32:
+  board: esp32-c3-devkitm-1
+  variant: ESP32C3
+
+  framework:
+    type: esp-idf
+    sdkconfig_options:
+      CONFIG_BT_BLE_42_FEATURES_SUPPORTED: y
+      CONFIG_BT_BLE_50_FEATURES_SUPPORTED: n
+
+external_components:
+  - source: github://pr#7942
+    refresh: 30s
+    components:
+      - adc
+######################################################################
+
+esp32_ble_tracker:
+  scan_parameters:
+    active: true
+    interval: 1100ms
+    window: 1100ms
+    
+
+bluetooth_proxy:
+  active: true
+
+xiaomi_ble:
+######################################################################
+wifi:
+  output_power: 8.5dB
+
+  # Example configuration entry
+logger:
+  level: DEBUG
+
+####################################################################
+globals:
+  - id: retorno
+    type: float
+    initial_value: "0.0"
+  - id: freq_fluxo                 # pulses per second per litre/minute of flow
+    type: float
+    restore_value: yes
+    initial_value: "6.6"
+  - id: sonic_offset                # Offset do Sensor até a água quando o tanque está cheio (em mm)
+    type: int
+    restore_value: yes
+    initial_value: '23'
+  - id: coluna_agua_total          # Medida da coluna de água quando o tanque está cheio (em mm)
+    type: int
+    restore_value: yes
+    initial_value: '420'
+
+####################################################################################
+image:
+  - file: "images/aquaeye-sologo.png"
+    type: binary
+    #transparency: alpha_channel
+    id: logo
+    resize: 20x20
+
+font:
+  - file: 'fonts/Audiowide.ttf'
+    id: ftitulo
+    size: 10
+
+  - file: 'fonts/Roboto.ttf'
+    id: finfo
+    size: 10
+    extras:
+      - file: "fonts/materialdesignicons-webfont.ttf"
+        glyphs: [
+          "\U000F1A86",  # Temp
+          "\U000F185B", # Nivel
+          "\U000F185A",  # Fluxo
+          ]    
+
+  - file: 'fonts/HyperFatosRegular.otf'
+    id:  bigdados
+    size: 30
+      
+i2c:
+  sda: ${sda_pin}
+  scl: ${scl_pin}
+  frequency: 400kHz
+
+display:
+  - platform: ssd1306_i2c
+    model: "SSD1306 128x64"
+    address: 0x3C
+    id: tela
+    #update_interval: 5s
+    pages:
+      - id: pagina_temp
+        lambda: |-
+          it.printf(64, 0, id(ftitulo), TextAlign::TOP_CENTER, "Temperatura");
+          it.printf(64, 32, id(bigdados), TextAlign::CENTER,  "%.1f C", id(temperatura).state);
+
+      - id: pagina_nivel
+        lambda: |-
+          it.printf(64, 0, id(ftitulo), TextAlign::TOP_CENTER, "Nivel");
+          it.printf(64, 32, id(bigdados), TextAlign::CENTER, "%.1f %%", id(nivel).state);
+  
+
+      - id: pagina_fluxo
+        lambda: |-
+          it.printf(64, 0, id(ftitulo), TextAlign::TOP_CENTER, "Fluxo");
+          it.printf(64, 32, id(bigdados), TextAlign::CENTER, "%.1f L/h", id(fluxo_hora).state);
+
+      - id: pagina_ph
+        lambda: |-
+          it.printf(64, 0, id(ftitulo), TextAlign::TOP_CENTER, "PH");
+          it.printf(64, 32, id(bigdados), TextAlign::CENTER, "%.1f", id(ph_aquario).state);
+
+interval:
+  - interval: 5s
+    then:
+      - display.page.show_next: tela
+      - component.update: tela
+
+#=========================================================
+# Example configuration entry
+button:
+  - platform: restart
+    name: "Reiniciar"
+    entity_category: diagnostic
+    disabled_by_default: false
+    
+# SENSORES
+####################################################################################
+# TEMPERATURA
+one_wire:
+  - platform: gpio
+    pin: ${temp_pin}
+
+sensor:
+  #------------------------------------------------------------#
+  - platform: homeassistant
+    id: ha_freq_fluxo
+    entity_id: input_number.freq_fluxo_sala
+    on_value:
+      then:
+        if:
+          condition:
+              lambda: 'return id(freq_fluxo) != float(x);'
+          then:
+            - logger.log:
+                level: INFO
+                format: 'Mudança na Freq Fluxo : de %f para %f'
+                args: ['id(freq_fluxo)', 'float(x)']
+            - globals.set:
+                id: freq_fluxo
+                value: !lambda 'return float(x);'
+  #------------------------------------------------------------#
+  - platform: homeassistant
+    id: ha_sonic_offset
+    entity_id: input_number.sonic_offset_sala
+    on_value:
+      then:
+        if:
+          condition:
+              lambda: 'return id(sonic_offset) != int(x);'
+          then:
+            - logger.log:
+                level: INFO
+                format: 'Mudança no Offset Sonico : de %d para %d'
+                args: ['id(sonic_offset)', 'int(x)']
+            - globals.set:
+                id: sonic_offset
+                value: !lambda 'return int(x);'
+  #------------------------------------------------------------#
+  - platform: homeassistant
+    id: ha_coluna_agua_total
+    entity_id: input_number.coluna_agua_total_sala
+    on_value:
+      then:
+        if:
+          condition:
+              lambda: 'return id(coluna_agua_total) != int(x);'
+          then:
+            - logger.log:
+                level: INFO
+                format: 'Mudança na Coluna de Agua : de %d para %d'
+                args: ['id(coluna_agua_total)', 'int(x)']
+            - globals.set:
+                id: coluna_agua_total
+                value: !lambda 'return int(x);'
+  #------------------------------------------------------------#
+  - platform: homeassistant
+    id: ph_aquario
+    entity_id: sensor.ph_aquario_da_sala
+    
+  #------------------------------------------------------------#
+
+  - platform: dallas_temp
+    name: "Temperatura"
+    update_interval: "${temp_time}"
+    id: temperatura
+    filters:
+      - filter_out: nan
+      - clamp:
+          min_value: 0
+
+#------------------------------------------------------------#
+  - platform: ultrasonic  
+    id: distancia_agua
+    trigger_pin: ${dist_pin_trig}
+    echo_pin: ${dist_pin_eco}
+    name: "Distância da Água"
+    unit_of_measurement: "cm"
+    icon: "mdi:waves-arrow-up"
+    accuracy_decimals: 3
+    update_interval: ${level_time}
+    #timeout: 2.0m
+    pulse_time: 20us
+    internal: true
+    filters:
+       - filter_out: nan
+       #- lambda: return (x * 100);
+    on_value:
+      - sensor.template.publish:
+          id: nivel
+          state: !lambda return ( (id(coluna_agua_total) - (id(distancia_agua).state*1000.0 - id(sonic_offset))) * 100 ) / id(coluna_agua_total);
+      # x = leitura atual em m
+      # Altura Total : 50 cm       AT 
+      # Offset do Sensor= 2 cm     OS 
+      # Coluna de Agua = 42 cm     CA
+      # FALTA = (x*100 - OS) =  (x*100 - 2)  
+      # SOBRANDO = (CA - FALTA) = CA - (x*100 - OS)
+      # % = (SOBRANDO * 100) / CA
+
+  - platform: template        # Nivel da Agua
+    name: "Nível da Água"
+    id: nivel
+    unit_of_measurement: '%'
+    accuracy_decimals: 0
+    icon: "mdi:water-percent"
+    filters:
+        - filter_out: nan
+        - median: 
+            send_first_at: 1
+            window_size: 4
+            send_every: 2
+
+ #------------------------------------------------------------#
+  - platform: pulse_counter
+    name: "Pulsos"
+    id: fluxo_pulsos
+    internal: true
+    #use_pcnt: false
+    #internal_filter: 40us
+    pin: ${flux_pin}
+    #pin:
+      #number: ${flux_pin}
+      #mode:
+        #input: true
+        #pullup: true
+    update_interval: "${flux_time}s"
+    icon: "mdi:wave-undercurrent"
+    unit_of_measurement: "pulsos"
+    accuracy_decimals: 0
+    filters:
+      - filter_out: nan
+    on_value:                           # F = 6.68 * Q(L/min)
+      - sensor.template.publish:
+          id: fluxo_min
+          state: !lambda return ( (x / ${flux_time}) / id(freq_fluxo)  );        # Q = F / 6.68  (ajustando o tempo de coleta: Q = (F / tempo) / 6.68 = F / (tempo * 6.68)
+      - sensor.template.publish:
+          id: fluxo_hora
+          state: !lambda return ( (x / ${flux_time}) / ( id(freq_fluxo) ) ) * 60;    # O mesmo que o anterior, * 60
+
+  - platform: template
+    name: "Fluxo por Min."
+    device_class: volume_flow_rate
+    id: fluxo_min
+    unit_of_measurement: 'L/min'
+    accuracy_decimals: 1
+    icon: "mdi:waves-arrow-right"
+    filters:
+        - filter_out: nan
+
+  - platform: template
+    name: "Fluxo por Hora"
+    #device_class: volume_flow_rate
+    id: fluxo_hora
+    unit_of_measurement: 'L/h'
+    accuracy_decimals: 1
+    icon: "mdi:waves-arrow-right"
+    filters:
+        - filter_out: nan
+
+  - platform: integration
+    device_class: water
+    state_class: total_increasing
+    name: "Litros Filtrados"
+    unit_of_measurement: 'L'
+    accuracy_decimals: 1
+    sensor: fluxo_min
+    time_unit: min
+    icon: "mdi:cup-water"
+   #------------------------------------------------------------#
+   
+  - platform: adc                  # PH
+    pin: ${ph_pin}
+    id: ph
+    name: "pH ads"
+    update_interval: ${ph_time}
+    unit_of_measurement: V
+    accuracy_decimals: 5
+    attenuation: auto   # Need for ESP32 !!!!!
+    # https://esphome.io/components/sensor/index.html#sensor-filters
+    filters:
+      #- multiply: 3.3    #needed for WEMOS D1_mini
+      - median:
+          window_size: 7
+          send_every: 4
+          send_first_at: 3
+####################################################################################
