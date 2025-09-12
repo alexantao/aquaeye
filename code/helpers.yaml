@@ -1,3 +1,9 @@
+input_datetime:
+  co2_refill:
+    name: AquaEye - CO² Refill Date
+    has_date: true
+    has_time: false
+    icon: mdi:calendar
 input_number:
   sonic_offset:
     name: AquaEye - Sensor to Water Distance
