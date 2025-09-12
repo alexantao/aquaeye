@@ -1,4 +1,4 @@
-# **This directory contains the files with the codes used in this project.**
+# **TFiles used in this project:**
 
 
 * packages: directory with files to copy to /config on installation;
