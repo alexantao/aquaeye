@@ -45,22 +45,16 @@ It consists on two parts: hardware and software:
 
 
 | PH: **PH-4502C** | OLED display **SSD1315** |
+| :---: | :---: |
+| <img src="https://github.com/alexantao/aquaeye/blob/main/images/ph.jpeg?raw=true" width="150"> | <img src="https://github.com/alexantao/aquaeye/blob/main/images/oled.jpg?raw=true" width="150"> |
+| This sensor measures the PH of the water. The real measure it returns is a voltage acording the PH of the water. So, it must be calibrated properly so that the software interpret that Voltage and transform into a PH value. I still could not make it work properly, but it is included on the hardware for future utilization. | I added this display so that we can see the sensors values even whenm the connection to HomeAssistant is not working |
+
+
+| Support | Connectors |
 |:---:|:---:|
-| <p align="center"><img src="https://github.com/alexantao/aquaeye/blob/main/images/ph.jpeg?raw=true" width="150"></p> | <p align="center"><img src="https://github.com/alexantao/aquaeye/blob/main/images/oled.jpg?raw=true" width="150"></p> |
-|his sensor measures the PH of the water. The real measure it returns is a voltage acording the PH of the water. So, it must be calibrated properly so that the software interpret that Voltage and transform into a PH value. I still could not make it work properly, but it is included on the hardware for future utilization. | I added this display so that we can see the sensors values even whenm the connection to HomeAssistant is not working |
+| <img src="https://github.com/alexantao/aquaeye/blob/main/images/suporte-sensor.jpg?raw=true" width="150"> | <img src="https://github.com/alexantao/aquaeye/blob/main/images/connectors.png?raw=true" width="150"> |
+| I also had to print a support for the sonic sensor and temperature from <a href="https://www.thingiverse.com/thing:5439668">https://www.thingiverse.com/thing:5439668</A> | To make it portable, I decided to connect the sensors with pluggable connectors. I tested several ones, like those audio Jack. Soldering was a challenge for me. To make thing easier, I bought on Ali an magnetic connector that already comes with wires soldered. Very high quality. |
 
-  * PH: **PH-4502C**
-    This sensor measures the PH of the water. The real measure it returns is a voltage acording the PH of the water. So, it must be calibrated properly so that the software interpret that Voltage and transform into a PH value. I still could not make it work properly, but it is included on the hardware for future utilization.
-    <p align="center"><img src="https://github.com/alexantao/aquaeye/blob/main/images/ph.jpeg?raw=true" width="150"></p>
-
-  * OLED display **SSD1315**
-    I added this display so that we can see the sensors values even whenm the connection to HomeAssistant is not working
-      <p align="center"><img src="https://github.com/alexantao/aquaeye/blob/main/images/oled.jpg?raw=true" width="150"></p>
-      
-  * I also had to print a support for the sonic sensor and temperature from <a href="https://www.thingiverse.com/thing:5439668">https://www.thingiverse.com/thing:5439668</A>:
-    <p align="center"><img src="https://github.com/alexantao/aquaeye/blob/main/images/suporte-sensor.jpg?raw=true" width="150"></p>
-
-  * To make it portable, I decided to connect the sensors with pluggable connectors. I tested several ones, like those audio Jack. Soldering was a challenge for me. To make thing easier, I bought on Ali an magnetic connector that already comes with wires soldered. Very high quality. <p align="center"><img src="https://github.com/alexantao/aquaeye/blob/main/images/connectors.png?raw=true" width="150"></p>
 </div>
 
 ### **Schematic and PCB**
