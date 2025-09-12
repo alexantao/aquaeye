@@ -21,6 +21,7 @@ It consists on two parts: hardware and software:
   We also have a lot os options related to sensors tyes. and below are a list of those I tested:
 
 <div align=center>
+  
 | Temperature Sensor: **DS18B20** | Light Sensor: **GY-302** |
 |:---:|:---:|
 |<img src="https://github.com/alexantao/aquaeye/blob/main/images/dallas.jpeg?raw=true" width="150">|<img src="https://github.com/alexantao/aquaeye/blob/main/images/gy-302.jpeg?raw=true" width="150">|
