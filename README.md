@@ -147,7 +147,7 @@ AquaEye panel uses a series of integrations that must be installed before config
 * custom:bar-card
 * custom:card-templater
 
-You will also need to make some adjustments in the panel YAML, for example, the Aquarium light entity.
+You will also need to make some adjustments in the panel YAML, for example, the Aquarium light entity, circulation pump, etc....
 
 The idea is to use HA packages feature: 
 1. Create a _packages_ directory inside HomeAssistant config dir;
