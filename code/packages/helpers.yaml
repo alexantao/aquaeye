@@ -1,3 +1,6 @@
+timer:
+  timer_aqua_light:
+    duration: "06:00:00"
 input_datetime:
   co2_refill:
     name: AquaEye - CO² Refill Date
