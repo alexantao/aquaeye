@@ -83,9 +83,46 @@ input_number:
     min: 0
     max: 5000
     step: 1
-    unit_of_measurement: L/h
-    mode: box
+    unit_of_measurement: %
+    mode: slider
     icon: mdi:waves
+
+  max_light_intensity:
+    name: Max Light Intensity
+    initial: 75
+    min: 0
+    max: 100
+    step: 1
+    unit_of_measurement: %
+    icon: mdi:television-ambient-light
+
+  circulation_time:
+    name: Time for Circulation Pump
+    initial: 10
+    min: 0
+    max: 60
+    step: 1
+    unit_of_measurement: min
+    icon: mdi:autorenew
+
+  air_time:
+    name: Time for Bubble Pump
+    initial: 10
+    min: 0
+    max: 60
+    step: 1
+    unit_of_measurement: min
+    icon: mdi:chart-bubble
+
+  light_fader_time:
+    name: Time for Fader Duration
+    initial: 30
+    min: 0
+    max: 60
+    step: 1
+    unit_of_measurement: min
+    icon: mdi:lightbulb-on-60
+
 
 input_select:
   c_calib_ph4:
