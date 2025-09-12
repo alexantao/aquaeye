@@ -140,7 +140,7 @@ elements:
       top: "-5%"
       transform: scale(0.1, 0.1) translate(-50%, -50%)
   - type: state-label
-    entity: sensor.tempo_restante_luz_da_sala
+    entity: sensor.light_remaining_time
     style:
       z-index: 3
       left: 35%
@@ -148,7 +148,7 @@ elements:
       color: lightgreen
       font-size: 200%
     conditions:
-      - entity: sensor.tempo_restante_luz_da_sala
+      - entity: sensor.light_remaining_time
         state_not: "00:00"
   - type: custom:slider-entity-row
     entity: light.luz_do_aquario
@@ -217,37 +217,37 @@ elements:
               - type: entities
                 title: Sensores
                 entities:
-                  - entity: input_number.coluna_agua_total_sala
-                    name: Coluna de Água
-                  - entity: input_number.sonic_offset_sala
-                    name: Distância do Sensor
-                  - entity: input_number.freq_fluxo_sala
-                    name: Fator do Sensor de Fluxo
+                  - entity: input_number.coluna_agua_total
+                    name: Water Column
+                  - entity: input_number.sonic_offset
+                    name: Sensor Distance
+                  - entity: input_number.freq_fluxo
+                    name: Flux Sensor Factor
                   - entity: input_number.vazao_canister
-                    name: Vazão do Fluxo
+                    name: Flux Flow Rate
               - type: entities
                 title: Equipamentos
                 entities:
-                  - entity: input_number.aquario_max_luz
+                  - entity: input_number.max_light_intensity
                     name: Máx Luz
-                  - entity: input_number.aquario_sala_tempo_circulacao
-                    name: Tempo Circ.
-                  - entity: input_number.aquario_tempo_da_aeracao
-                    name: tempo Aera.
-                  - entity: input_number.fader_luz_sala
-                    name: Tempo Fader
+                  - entity: input_number.circulation_pump
+                    name: Circ. Time
+                  - entity: input_number.air_pump
+                    name: Bubble Time
+                  - entity: input_number.light_fader time
+                    name: Fader Time
           - type: horizontal-stack
             cards:
               - type: entities
-                title: pH - Temp Sala / Calibração
+                title: pH - Temp / Calibration
                 entities:
-                  - entity: sensor.aquaeye_sala_ph_ads
+                  - entity: sensor.aquaeye_ads
                     name: pH V
-                  - entity: sensor.ph_aquario_da_sala
-                  - entity: sensor.aquaeye_sala_temperatura
+                  - entity: sensor.aquaeye_ph
+                  - entity: sensor.temperatura
                   - entity: input_boolean.calib_ph
               - type: entities
-                title: Calibração pH Sala
+                title: pH Calibration
                 entities:
                   - entity: input_select.c_calib_ph4
                   - entity: input_number.v_calib_mv4
@@ -273,7 +273,7 @@ elements:
     icon: mdi:tune-vertical
     show_title: false
     show_name: false
-    title: Configurações
+    title: Configuration
     tap_action:
       action: toggle
     style:
@@ -296,10 +296,10 @@ elements:
           overflow: hidden;
         }
   - type: custom:button-card
-    entity: switch.circulacao_aquario
+    entity: switch.circulation_pump
     icon: mdi:fan
     show_name: false
-    title: Liga/Desliga Circulação
+    title: On/Off Circulation
     style:
       z-index: 3
       top: 67.5%
@@ -332,7 +332,7 @@ elements:
           overflow: hidden;
         }
   - type: custom:button-card
-    entity: sensor.aquaeye_sala_fluxo_por_hora
+    entity: sensor.fluxo_hora
     icon: mdi:fan
     tap_action: none
     tltle: Fluxo do Filtro
@@ -430,10 +430,10 @@ elements:
           top: 10px;
         }
     entities:
-      - entity: sensor.aquaeye_sala_temperatura
+      - entity: sensor.aquaeye_temperatura
   - type: custom:fluid-level-background-card
-    entity: sensor.aquaeye_sala_nivel_da_agua
-    fill_entity: switch.aquario_sala_aeracao
+    entity: sensor.aquaeye_level
+    fill_entity: switch.aeration
     background_color: transparent
     show_state: true
     show_icon: false
@@ -469,7 +469,7 @@ elements:
       type: custom:card-templater
       card:
         type: entity
-        entity: sensor.aquaeye_sala_nivel_da_agua
+        entity: sensor.aquaeye_level
         title_template: "{{ states(''sensor.aquaeye_sala_nivel'')|round(0) }} %"
         unit_of_measurement: "%"
         show_header_toggle: false
