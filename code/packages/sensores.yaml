@@ -1,0 +1,27 @@
+- sensor:
+  - name: "AquaEye - pH"
+    unique_id: aquaeye_ph
+    unit_of_measurement: "pH"
+    device_class: ph
+    icon: mdi:ph 
+    # Formula used?  pHx = pH1 + (Ex – E1)(pH2 – pH1)/(E2-E1)
+    state: "{{ (states('input_select.c_calib_ph9_10')| float) - ( (((states('input_number.v_calib_mv9') | float)-(states('sensor.aquaeye_ads') | float(0)))*((states('input_select.c_calib_ph7')| float)-(states('input_select.c_calib_ph9_10') | float))) / ((states('input_number.v_calib_mv7') | float)-(states('input_number.v_calib_mv9') | float)) ) | round(2) }}"
+
+  - name: "CO2 Level"
+    icon: mdi:co2
+    unique_id: co2_level
+    state: >
+      {% set abastecimento = states('input_datetime.co2_refill') | as_datetime | as_local %}
+      {% set duracao = states('input_number.co2_duration') |int  %}
+      {% set hoje = now() %}
+      {% set dias_passados = (hoje - abastecimento).days |int %}
+      {% set nivel = 100 - ((dias_passados * 100) / duracao) |int %}
+      {{ nivel | int }}
+
+  - name: "Light Remaining Time"
+    icon: mdi:timer-outline
+    unique_id: light_remaining_time
+    value_template: >
+      {% set f = state_attr('timer.timer_aqua_light', 'finishes_at') %}
+      {{ '00:00:00' if f == None else
+        (as_datetime(f) - now()).total_seconds() | timestamp_custom('%H:%M:%S', false) }}
