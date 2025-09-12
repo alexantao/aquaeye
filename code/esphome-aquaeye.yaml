@@ -329,7 +329,7 @@ sensor:
    
   - platform: adc                  # PH
     pin: ${ph_pin}
-    id: ph
+    id: aquaeye_ph
     name: "pH ads"
     update_interval: ${ph_time}
     unit_of_measurement: V
