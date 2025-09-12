@@ -138,6 +138,17 @@ Homeassistant configuration is complex (and not yet fully developped).
 I'll try to make it simple by making YAML files to be included on _configuration.yaml_ file. 
 See README file inside the code directory for a description of each.
 
+AquaEye panel uses a series of integrations that must be installed before configuration:
+* custom:pool-monitor-card (pH gauge)
+* custom:fluid-level-background-card
+* custom:button-card
+* custom:slider-entity-row
+* custom:hui-element
+* custom:bar-card
+* custom:card-templater
+
+You will also need to make some adjustments in the panel YAML, for example, the Aquarium light entity.
+
 The idea is to use HA packages feature: 
 1. Create a _packages_ directory inside HomeAssistant config dir;
 2. copy YAML files there (careful, there's YAML for ESPHOME and for HomeAssistant);
@@ -146,6 +157,9 @@ The idea is to use HA packages feature:
     packages: !include_dir_named packages
    ```
 4. Check and restart HomeAssistant.
+5. Add a lovelace Picture-Elements card on a new dashboard or on an existent one with the contants of the <a href="https://github.com/alexantao/aquaeye/blob/main/code/panel-card.yaml">panel-card.yaml</A> file.
+
+Enjoy
 
 Code files are located at: <A HREF="https://github.com/alexantao/aquaeye/tree/main/code">https://github.com/alexantao/aquaeye/tree/main/code</A>
    
