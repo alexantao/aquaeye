@@ -1,5 +1,5 @@
 type: picture-elements
-image: /local/itens/aquario-fundo.png
+image: /local/aquario-fundo.png
 elements:
   - type: image
     title: Aquecedor
