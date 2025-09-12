@@ -68,6 +68,26 @@ The only thing you must taka a look are those 2 resistors between Flux Signal Ou
 |---|:---:|:---:|
 | <img src="https://github.com/alexantao/aquaeye/blob/main/images/esquematico.png?raw=true" width="150"> | <img src="https://github.com/alexantao/aquaeye/blob/main/images/2d-toplayer.png?raw=true" width="150"> | <img src="https://github.com/alexantao/aquaeye/blob/main/images/3D-PCB.png?raw=true" width="150"> |
 
+**BOOM** - Lista de Materiais
+|  Componente | Detalhe | Quantidade |
+|:---:|:---:|:---:|
+| Led SMD | LED0805-R-RD | 1 | 
+| Capacitor | CAP-SMD_BD3.0-L3.3-W3.3-RD | 6 |
+| Diode | SMA_L4.3-W2.6-LS5.2-RD | 6 |
+| Conector | CONN-TH_PH2.0D-L-3P | 3 |
+| Conector | CONN-TH_WAFER-PH2.0-2PZZ-Y62 | 2 |
+| Conector | CONN-TH_PH2.0-4P | 3 |
+| Regulator | AMS1117-3.3 BUCK CONVERTER BREAKOUT | 1 |
+| Resistor | R0603 100 ohms | 2 |
+| Resistor | R0603 220 ohms | 1 | 
+| Resistor | R0603 1.7 Kohms | 1 |
+| Resistor | R0603 3.7 Kohms | 1 |
+| Chip | TPS2553DBVR | 1 |
+| Resistor | R0603 4.7 Kohms | 1 |
+| Module | ESP32-C3-SUPER-MINI | 1 | 
+| Resistor | R0603 5.1 Kohms | 1 |
+| Resistor | R0603 150 ohms | 1 |
+
 </div>
 
 # **PROJECT FILES AND ESPHOME CODE**
