@@ -157,7 +157,7 @@ The idea is to use HA packages feature:
     packages: !include_dir_named packages
    ```
 4. Check and restart HomeAssistant.
-5. Copy Background picture _aquario-fundo.png_ to the /config/www directory
+5. Copy _aquaeye-images_ directory contents to /config/www/aquaeye-images directory
 6. Add a lovelace Picture-Elements card on a new dashboard or on an existent one with the contants of the <a href="https://github.com/alexantao/aquaeye/blob/main/code/panel-card.yaml">panel-card.yaml</A> file.
 
 Enjoy
