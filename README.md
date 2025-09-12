@@ -97,15 +97,16 @@ The next step is HomeAssistant configuration.
   For that, you will need to install ESPHOME Add-On (or integration, for the docker version). Click on below button to see and install:
    <p align="center"><A href="https://my.home-assistant.io/redirect/supervisor_addon/?addon=5c53de3b_esphome&repository_url=https%3A%2F%2Fgithub.com%2Fesphome%2Fhome-assistant-addon"><img src="https://github.com/alexantao/aquaeye/blob/main/images/supervisor_addon.svg?raw=true"></A> </p>
 
-  After that, it should automatically find the Device on your network, if you configured it properly. If it does not apear, try to discover it's IP Address on your AccessPoint and tray to mannually add it.
+  After that, it should automatically find the Device on your network, if you configured it properly. If it does not apear, try to discover it's IP Address on your AccessPoint and try to mannually add it.
 
   ### Lovelace Card
   
   All parameters are configured there. If you will not use a HASSIO server, you will have in hardcode the parameters on Esphome.
 
+ I mounted a simple and visual panel to see and control the aquarium. It has a representation for all sensors and also some commands implemented.
+
   <p align="center"><img src="https://github.com/alexantao/aquaeye/blob/main/images/panel.gif?raw=true"></p>
 
-  I mounted a simple and visual panel to see and control the aquarium. It has a representation for all sensors and also some commands implemented.
   These are the caracteristics:
   1. The water level is shown with fluid-level and reflects the sensor that’s installed on the aquarium. There’s the possibility to make the refil automatic (I don’t have it… yet).
   2. Canister flux is shown as a fan with the value below. I defined some severities, so that it will be red/green/orange depending on it’s level.
