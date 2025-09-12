@@ -1,8 +1,19 @@
+# Entities you need to adjust:
+#   * Any AquaEye related, because HA generates the entities based on Device name
+#   * switch.aqua_heater: if you have, the heater plug to turn on/off
+#   * switch.feeder: if you have, the automatic feeder to turn on/off
+#   * switch.aqua_aeration: if you have those bubble pumps 
+#   * switch.uv_light: if you have a UV light inteligent plug.
+#   * light.aqua_light: the dimmer or plug that turns on/off your aquarium light
+#   * 
+
+
 type: picture-elements
-image: /local/aquario-fundo.png
+image: /local/aquaeye-images/aquario-fundo.png
 elements:
   - type: image
-    title: Aquecedor
+    title: Heater
+    entity: switch.aqua_heater
     tap_action:
       action: none
     state_image:
@@ -21,14 +32,14 @@ elements:
       setpoint: 6.8
     sensors:
       ph:
-        - entity: sensor.ph_aquario_da_sala
+        - entity: sensor.aquaeye_ph
     style:
       z-index: 1
       top: 77%
       left: 50%
       width: 40%
   - type: custom:fluid-level-background-card
-    entity: sensor.co2_sala_nivel
+    entity: sensor.co2_level
     background_color: transparent
     show_state: true
     show_icon: false
@@ -68,7 +79,7 @@ elements:
         }
     card:
       type: custom:button-card
-      entity: sensor.co2_sala_nivel
+      entity: sensor.co2_level
       title_template: "{{ states('sensor.co2_sala_nivel')|round(0) }} %"
       show_header_toggle: false
       show_name: false
@@ -79,10 +90,10 @@ elements:
       tap_action:
         action: call-service
         confirmation:
-          text: Marcar hoje como dia de recarga ?
+          text: Set today as Refill date ?
         service: input_datetime.set_datetime
         service_data:
-          entity_id: input_datetime.dia_reabastecimento_co2_sala
+          entity_id: input_datetime.co2_refill
           date: "[[[ return new Date().toLocaleDateString('en-CA') ]]]"
         value: "off"
       card_mod:
@@ -100,8 +111,8 @@ elements:
            overflow: unset !important;
             }
   - type: image
-    entity: switch.alimentador_sala
-    title: Alimentar Peixinhos
+    entity: switch.feeder
+    title: Feed Fish
     tap_action:
       action: toggle
     state_image:
@@ -114,8 +125,8 @@ elements:
       top: 0.5%
       transform: scale(0.2, 0.2) translate(-50%, -50%)
   - type: image
-    entity: switch.aquario_sala_aeracao
-    title: Aeração do Aquário
+    entity: switch.aqua_aeration
+    title: Aeration
     tap_action:
       action: toggle
     state_image:
@@ -127,8 +138,8 @@ elements:
       top: 35%
       transform: scale(0.2, 0.2) translate(-50%, -50%)
   - type: image
-    entity: switch.aquario_sala_uv
-    title: Luz UV
+    entity: switch.uv_light
+    title: UV Light
     tap_action:
       action: toggle
     state_image:
@@ -151,7 +162,7 @@ elements:
       - entity: sensor.light_remaining_time
         state_not: "00:00"
   - type: custom:slider-entity-row
-    entity: light.luz_do_aquario
+    entity: light.aqua_light
     style:
       z-index: 3
       left: 50%
@@ -171,7 +182,7 @@ elements:
          overflow: unset !important;
         }
   - type: image
-    entity: light.luz_do_aquario
+    entity: light.aqua_light
     tap_action: none
     hold_action: none
     state_image:
@@ -192,8 +203,8 @@ elements:
       height: 28%
       transform: scale(0.6, 0.6) translate(-50%, -50%)
   - type: image
-    entity: switch.aquario_co2
-    title: CO2 - Clique na válvula para ligar/desligar
+    entity: switch.co2_valve
+    title: CO2 - Click to Turn On/Off
     tap_action:
       action: toggle
     state_image:
@@ -226,15 +237,15 @@ elements:
                   - entity: input_number.vazao_canister
                     name: Flux Flow Rate
               - type: entities
-                title: Equipamentos
+                title: Equipments
                 entities:
                   - entity: input_number.max_light_intensity
-                    name: Máx Luz
-                  - entity: input_number.circulation_pump
+                    name: Max Luz
+                  - entity: input_number.circulation_time
                     name: Circ. Time
-                  - entity: input_number.air_pump
+                  - entity: input_number.air_time
                     name: Bubble Time
-                  - entity: input_number.light_fader time
+                  - entity: input_number.light_fader_time
                     name: Fader Time
           - type: horizontal-stack
             cards:
@@ -244,7 +255,7 @@ elements:
                   - entity: sensor.aquaeye_ads
                     name: pH V
                   - entity: sensor.aquaeye_ph
-                  - entity: sensor.temperatura
+                  - entity: sensor.aquaeye_temperatura
                   - entity: input_boolean.calib_ph
               - type: entities
                 title: pH Calibration
