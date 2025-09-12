@@ -33,7 +33,17 @@ input_number:
     step: 0,1
     mode: box
     icon: mdi:slash-forward
-   
+
+  co2_duration:
+    name: AquaEye - CO² Duration
+    initial: 30
+    min: 0
+    max: 100
+    step: 1
+    mode: box
+    unit_of_measurement: days
+    icon: mdi:timer-sand-complete
+    
   v_calib_mv4:
     name: AquaEye - Calibration mV 4
     initial: 3
