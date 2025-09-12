@@ -20,7 +20,7 @@ It consists on two parts: hardware and software:
   I use most cheap sensors that exists on the market, but must be careful, lots of those cheap harwdare are low quality. But the goal of this project is to make a affordable and reliable monitoring system.
   We also have a lot os options related to sensors tyes. and below are a list of those I tested:
 
-
+<div align=center>
 | Temperature Sensor: **DS18B20** | Light Sensor: **GY-302** |
 |:---:|:---:|
 |<img src="https://github.com/alexantao/aquaeye/blob/main/images/dallas.jpeg?raw=true" width="150">|<img src="https://github.com/alexantao/aquaeye/blob/main/images/gy-302.jpeg?raw=true" width="150">|
@@ -61,7 +61,7 @@ It consists on two parts: hardware and software:
     <p align="center"><img src="https://github.com/alexantao/aquaeye/blob/main/images/suporte-sensor.jpg?raw=true" width="150"></p>
 
   * To make it portable, I decided to connect the sensors with pluggable connectors. I tested several ones, like those audio Jack. Soldering was a challenge for me. To make thing easier, I bought on Ali an magnetic connector that already comes with wires soldered. Very high quality. <p align="center"><img src="https://github.com/alexantao/aquaeye/blob/main/images/connectors.png?raw=true" width="150"></p>
-
+</div>
 
 ### **Schematic and PCB**
 
