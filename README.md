@@ -89,6 +89,7 @@ The only thing you must taka a look are those 2 resistors between Flux Signal Ou
 | Resistor | R0603 5.1 Kohms | 1 |
 | Resistor | R0603 150 ohms | 1 |
 | Connector | DC-022 Jack P4 | 1 |
+| Box | Generic | 1 |
 
 </div>
 
