@@ -8,7 +8,7 @@ It has a lot of improvements to make.
 
 # Description
 
-It consists on two parts: hardware and software:
+It consists of two parts: hardware and software:
 
 ## **Hardware**
 
