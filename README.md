@@ -20,12 +20,14 @@ It consists of two parts: hardware and software:
   I use most cheap sensors that exists on the market, but must be careful, lots of those cheap harwdare are low quality. But the goal of this project is to make a affordable and reliable monitoring system.
   We also have a lot os options related to sensors tyes. and below are a list of those I tested:
 
-<div align=center>
   
 | Temperature Sensor: **DS18B20** | Light Sensor: **GY-302** |
 |:---:|:---:|
-|<img src="https://github.com/alexantao/aquaeye/blob/main/images/dallas.jpeg?raw=true" width="150">|<img src="https://github.com/alexantao/aquaeye/blob/main/images/gy-302.jpeg?raw=true" width="150">|
+|<div align=center>
+<img src="https://github.com/alexantao/aquaeye/blob/main/images/dallas.jpeg?raw=true" width="150">|<img src="https://github.com/alexantao/aquaeye/blob/main/images/gy-302.jpeg?raw=true" width="150">|
 |This sensor is water proof and measures the water temperature. Got some cheap ones that stopped working, but the measurement is quite good.|I added this sensor because one of my aquariums get sunlight on winter. When it happens, I can delay the aquarium light to turn on some hours.|
+
+</div>
 
   * Water Level: **HC-SR04** , **RCWL-1670**, **JSN-SR04T/AJ-SR04M**
     
@@ -35,6 +37,8 @@ It consists of two parts: hardware and software:
 |:-------------:|:--------------:|:--------------:|
 | <img src="https://github.com/alexantao/aquaeye/blob/main/images/sonic1.jpeg?raw=true" width="150"> | <img src="https://github.com/alexantao/aquaeye/blob/main/images/RCWL-1670.jpg?raw=true" width="150"> | <img src="https://github.com/alexantao/aquaeye/blob/main/images/sonic2.jpeg?raw=true" width="150"> |
 | The most simple of then, the board is attached with the sensors and gives a good precision. Measures distances for at most 2 meters and minimal of about 2cm. The problem with it is that it is not waterproof, and on of then got rusty in little time. | Identical from the HR-SR04, but it claims to be water proof. Only the sensor itself, of course. The board is not.  | This one is quite different, the sensor is water proof and the board is split from it. It's the same as those used in cars bumpers as parking sensor. The advantage is clearly the water proof design, but the board will take some extra space on the box. |
+
+**Atention:**: Verify the sensor return unit you have. HC-SR04 return distance in centimeters, JSN-SR04T returns in meters. You must adjust the code to reflect yours
 
   
   * Flux sensor: This is to monitor the water flux the canister is sending to the aquarium. For several times I noticed a low flow, due to obstruction of even a impeller fault. With this sensor I can even predict when I need to clean the canister, because the flow gets slower. There's a lot of flow sensors on the market, some with a open/close valve e others with temperature sensor included.
