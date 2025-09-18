@@ -8,3 +8,4 @@
 * panel-card.yaml: code for a Picture Elements card to use on a lovelace (need adjustments, under development);
 * Gerber_PCB20-YYYY-MM-DD.zip: gerber files to make the PCB board;
 * AquaEye_YYYY-MM-DD.epro: project file made on EasyEDA Pro, with schematics and PCB design;
+* round-display.yaml: code for the ESP32 Round Display
