@@ -108,6 +108,8 @@ I glued it on my aquarium glass and eliminated the need of a buttom.
 <img src="https://github.com/alexantao/aquaeye/blob/main/images/round-display.jpeg?raw=true" width="150">
 </div>
 
+The code for the display is in the code directory of this git.
+
 # **PROJECT FILES AND ESPHOME CODE**
 
   The circuit board, as it has a ESP32 core, it needs a firmware to run. I choose to run ESPHOME, because it is very easy to work woth and it is HomeAssistant compatible and easy to integrate.
