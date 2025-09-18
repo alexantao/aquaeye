@@ -102,7 +102,7 @@ As an optional display, I bought a 1.28 inches round IPS Smart Display powered b
 This display is autonomous and is not part of the AquaEye, but it eases a lot data visualization. You only need a USB-C cable to power it and it takes all information from HomeAssistant. 
 Since it it touch, I can integrate controls, like light, UV, etc... 
 
-I glued it on mmy aquarium glass and eliminated the need of a buttom. 
+I glued it on my aquarium glass and eliminated the need of a buttom. 
 
 <div align=center>
 <img src="https://github.com/alexantao/aquaeye/blob/main/images/round-display.jpeg?raw=true" width="150">
