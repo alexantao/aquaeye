@@ -1,0 +1,637 @@
+substitutions:
+  device_name: "display-aquario-yuri"
+  friendly_name: "Display Aquário Yuri"
+  dns: "display-aquario-yuri.casa"
+  titulo_home: "Aquário Yuri"
+  titulo_temp: "Temperatura"
+  titulo_fluxo: "Fluxo Canister"
+  titulo_luz: "Iluminação"
+  titulo_luminancia: "Luminância"
+  titulo_nivel: "Nível da Água"
+  intervalo_padrao: "10s"
+  pausa: "60s"
+
+
+  luz: light.yuri_dimmer
+  temp: sensor.aquaeye_yuri_temperatura
+  flux: sensor.aquaeye_yuri_fluxo_por_hora
+  level: sensor.aquaeye_yuri_nivel_da_agua
+  luminancia: sensor.aquaeye_yuri_luminancia
+
+  screensaver: 10 min # Timeout for how long the screen should stay on after the last interaction
+  sdapin: GPIO4
+  sclpin: GPIO5
+  tint: GPIO0
+  tres: GPIO1
+  dcpin: GPIO2
+  bkpin: GPIO3
+  clpin: GPIO6
+  mopin: GPIO7
+  cspin: GPIO10
+
+######################################################################
+  on_boot: 
+    - priority: -100
+      then:
+        - delay: 10s
+        - lvgl.widget.hide: boot_screen
+
+        - script.execute: screentime
+        - lvgl.label.update:
+              id: date_widget
+              text: 
+                time_format: "%A %b %d"
+                time: ha_time
+
+
+esp32:
+  board: esp32-c3-devkitm-1
+  framework:
+    type: arduino
+
+######################################################################
+packages: 
+  device_base: !include common/device_base.yaml
+  wifi: !include common/wifi.yaml
+
+wifi:
+  output_power: 8.5dB
+
+  # Example configuration entry
+logger:
+  level: DEBUG
+
+######################################################################
+globals:
+  - id: pagina_pausada
+    type: bool
+    initial_value: "false" 
+    
+  - id: semana
+    type: std::array<std::string, 7> # 3 is the size of the array
+    restore_value: no
+    initial_value: '{"Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"}'
+  - id: meses
+    type: std::array<std::string, 12> # 3 is the size of the array
+    restore_value: no
+    initial_value: '{"Janeiro", "Favereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"}'
+######################################################################
+font:
+  - file: "fonts/Roboto.ttf"
+    id: font_titulo
+    size: 18
+    glyphsets: 
+      - GF_Latin_Core
+
+  - file: "fonts/DotSpot-Regular.ttf"
+    id: font_valores
+    size: 38
+  - file: "fonts/materialdesignicons-webfont.ttf"
+    id: mdi_font
+    size: 24 
+    glyphs:
+      - "\U000F050F" # Example: mdi-thermometer
+      - "\U000F05A9" # Example: mdi-wifi
+      - "\U000F185A" # Fluxo
+      - "\U000F07D0" # HASSIO
+      - "\U000F185B" # Nivel
+      - "\U000F0599" # Luz
+      - "\U000F17FF" # Luminancia
+      
+      
+
+image:
+  defaults:
+    type: binary
+    resize: 200x200
+    #transparency: alpha_channel
+  images:
+    file: "images/aquaeye-logo-pt.png"
+    id: boot_logo
+
+######################################################################
+
+time:
+  - platform: homeassistant
+    id: ha_time
+    
+######################################################################
+api:
+  on_client_connected:
+    - logger.log: "Connected to HomeAssistant."
+    - if:
+        condition:
+          lambda: 'return (0 == client_info.find("Home Assistant "));'
+        then:
+          - lvgl.widget.show: lbl_hastatus
+          - logger.log:
+              format: "HA Conectado"
+  on_client_disconnected:
+    - logger.log: "Disconnected from HomeAssistant."
+    - if:
+        condition:
+          lambda: 'return (0 == client_info.find("Home Assistant "));'
+        then:
+          - lvgl.widget.hide: lbl_hastatus
+          - logger.log:
+              format: "HA DesConectado"
+#=========================================================
+# Example configuration entry
+button:
+  - platform: restart
+    name: "Reiniciar"
+    entity_category: diagnostic
+    disabled_by_default: false
+    
+######################################################################
+sensor:
+  - platform: homeassistant
+    id: temperatura
+    entity_id: $temp
+    on_value: 
+      then:
+        - lvgl.indicator.update:
+            id: temperature_needle
+            value: !lambda return x * 10;
+        - lvgl.label.update:
+            id: temperature_text
+            text:
+              format: "%.1f°C"
+              args: [ 'x' ]
+              
+  - platform: homeassistant
+    id: nivel
+    entity_id: $level
+    on_value: 
+      then:
+        - lvgl.label.update:
+            id: nivel_lbl_valor
+            text: 
+              format: "%.1f %%"
+              args: [ 'id(nivel).get_state()' ]
+
+  - platform: homeassistant
+    id: fluxo
+    entity_id: $flux
+    on_value: 
+      then:
+        - lvgl.label.update:
+            id: fluxo_lbl_valor
+            text: 
+              format: "%.1f"
+              args: [ 'id(fluxo).get_state()' ]
+      
+  - platform: homeassistant
+    id: sensor_luminancia
+    entity_id: ${luminancia}
+    on_value: 
+      then:
+        - lvgl.label.update:
+            id: Luminancia_Valor
+            text: 
+              format: "%.1f"
+              args: [ 'id(sensor_luminancia).get_state()' ]
+
+  - platform: homeassistant
+    id: light_brightness
+    entity_id: ${luz}
+    attribute: brightness
+    filters:      
+    on_value:
+      - lvgl.label.update:
+            id: lbl_luz
+            text: 
+              format: "%d %%"
+              args: [ 'int(x) * 100 / 255' ]
+
+      - lvgl.slider.update:
+          id: dimmer_slider
+          #value:   # !lambda return x;
+          value: !lambda |-
+              if (std::isnan(x)) {
+                return int(0); 
+              }
+              return int(x); 
+          
+######################################################################
+text_sensor:
+    - platform: template
+      name: "Data"
+      id: data_atual
+      update_interval: 10s
+      lambda: |-
+            auto data_hora = id(ha_time).now();
+
+            // Format the date using strftime and your custom arrays
+            return id(semana)[data_hora.day_of_week] + ", " +
+                  to_string(data_hora.day_of_month) + "/" +
+                  to_string(data_hora.month - 1) + "/" + // month is 1-indexed
+                  to_string(data_hora.year);
+      on_value:
+        - lvgl.label.update:
+            id: date_widget
+            text: !lambda 'return x;'
+######################################################################
+script:
+  - id: screentime
+    mode: restart
+    then:
+      - light.turn_on: back_light
+      - delay: $screensaver
+      - light.turn_off: back_light
+  - id: screenoff
+    then:
+      - script.stop: screentime
+      - light.turn_off: back_light
+
+output:
+  - platform: ledc
+    pin: $bkpin
+    id: gpio_3_backlight_pwm
+
+light:
+  - platform: monochromatic
+    output: gpio_3_backlight_pwm
+    name: "Display Backlight"
+    id: back_light
+    restore_mode: ALWAYS_OFF
+    on_turn_off: 
+      then:
+        - lvgl.pause:
+            show_snow: true
+    on_turn_on: 
+      then:
+        - lvgl.resume:
+
+######################################################################
+
+spi:
+  mosi_pin: $mopin
+  clk_pin: $clpin
+
+i2c:
+  sda: $sdapin
+  scl: $sclpin
+  scan: true
+  id: ic_bus
+
+display:
+  - platform: ili9xxx
+    model: GC9A01A
+    id: watchface
+    reset_pin: $tres
+    cs_pin: $cspin
+    dc_pin: 
+      number: $dcpin
+      ignore_strapping_warning: true
+    invert_colors: true
+    update_interval: 2s
+    rotation: 180
+
+touchscreen:
+  - platform: cst816
+    id: touch
+    interrupt_pin: $tint
+    transform:
+      swap_xy: false
+      mirror_x: true
+      mirror_y: true
+    on_update:
+      - script.execute: screentime
+      - lambda: |-
+            for (auto touch: touches)  {
+                if (touch.state <= 2) {
+                  ESP_LOGI("Touch points:", "id=%d x=%d, y=%d", touch.id, touch.x, touch.y);
+                  id(pagina_pausada) = true;
+                }
+            }
+######################################################################
+interval:
+  - interval: 60s
+    then:
+      lambda: 'id(pagina_pausada) == false;'
+
+  - interval: ${intervalo_padrao} # Change page every 10 seconds
+    then:
+      - if:
+          condition:
+            lambda: 'return (id(pagina_pausada) == false);'
+          then:
+            - lvgl.page.next
+        
+lvgl:
+  buffer_size: 25%
+  update_interval: never
+
+  style_definitions:
+    - id: header_footer
+      bg_color: 0x2F8CD8
+      bg_grad_color: 0x005782
+      bg_grad_dir: VER
+      bg_opa: COVER
+      border_opa: TRANSP
+      radius: 0
+      pad_all: 0
+      pad_row: 0
+      pad_column: 0
+      border_color: 0xFFFFFF
+      text_color: 0xFFFFFF
+      width: 100%
+      height: 50
+  top_layer:
+    widgets:
+      - buttonmatrix:
+          align: bottom_mid
+          styles: header_footer
+          pad_all: 0
+          outline_width: 0
+          id: botoes
+          items:
+            styles: header_footer
+          rows:
+            - buttons:
+              - id: page_prev
+                text: "\uF053"
+                on_press:
+                  then:
+                    lvgl.page.previous:
+
+              - id: page_next
+                text: "\uF054"
+                on_press:
+                  then:
+                    lvgl.page.next:
+      - label: 
+          text: ${titulo_home}
+          id: lbl_tithome
+          text_font: font_titulo
+          hidden: false
+          align: TOP_MID
+          x: -2
+          y: 10
+          text_align: CENTER
+          text_color: blue
+      - label:
+          text: "\U000F07D0"    # homeassistant
+          text_font: mdi_font
+          id: lbl_hastatus
+          hidden: false
+          align: bottom_mid
+          x: 0
+          y: -50
+          text_align: right
+          text_color: blue
+      - label:
+          id: time_widget
+          align: CENTER
+          y: 97
+          text_color: 0x000000
+          text: 
+            time_format: "%H:%m"
+            time: ha_time
+      - label:
+          id: date_widget
+          text_font: font_titulo
+          text_color: 0x000000
+          align: CENTER
+          y: 79
+          text: "Carregando..."
+      - obj:
+          id: boot_screen
+          x: 0
+          y: 0
+          width: 100%
+          height: 100%
+          bg_color: 0xffffff
+          bg_opa: COVER
+          radius: 0
+          pad_all: 0
+          border_width: 0
+          widgets:
+            - image:
+                align: CENTER
+                src: boot_logo
+                y: 0
+            - spinner:
+                align: CENTER
+                y: 95
+                height: 50
+                width: 50
+                spin_time: 1s
+                arc_length: 60deg
+                arc_width: 8
+                indicator:
+                  arc_color: 0x18bcf2
+                  arc_width: 8
+          on_press:
+            - lvgl.widget.hide: boot_screen
+  pages:
+    #---------------------------------------------------
+    - id: pagina_luz     ## Controle da Iluminação  ####
+      widgets:
+        - label:
+            text: "\U000F0599"
+            y: -50
+            text_font: mdi_font
+            align: CENTER
+        - label:
+            text: ${titulo_luz}
+            y: -35
+            text_font: font_titulo
+            align: CENTER
+        - label:
+            id: lbl_luz
+            text: "00 %%"
+            y: 0
+            text_font: font_titulo
+            align: CENTER
+            on_short_click:     
+              then:
+                #- script.execute: screenoff
+                - homeassistant.action:
+                    action: light.toggle 
+                    data:
+                      entity_id: "light.luz_do_aquario"
+        - slider:
+            id: dimmer_slider
+            x: 0
+            y: 0
+            align: CENTER
+            width: 200
+            height: 30
+            pad_all: 8
+            min_value: 0
+            max_value: 255
+            on_release:
+              - homeassistant.action:
+                  action: light.turn_on
+                  data:
+                    entity_id: ${luz}
+                    brightness: !lambda |-
+                      if (isnan(x)) {
+                        // Handle NaN case, e.g., return a default value or log a message
+                        return 0; // Example: return 0 if NaN
+                      } else {
+                        // Process the valid sensor value
+                        return int(x); // Example: double the sensor value
+                      }
+    #---------------------------------------------------
+    - id: pagina_temperatura
+      widgets:
+        - obj:
+            height: 240
+            width: 240
+            align: CENTER
+            y: 10
+            bg_color: 0xFFFFFF
+            border_width: 0
+            pad_all: 14
+            widgets:
+              - meter:
+                  height: 100%
+                  width: 100%
+                  border_width: 0
+                  align: CENTER
+                  bg_opa: TRANSP
+                  scales:
+                    - range_from: 23
+                      range_to: 32
+                      angle_range: 180
+                      ticks:
+                        count: 90
+                        width: 1
+                        length: 31
+                      indicators:
+                        - tick_style:
+                            local: true
+                            start_value: 23
+                            end_value: 25
+                            color_start: red
+                            color_end: green
+                        - tick_style:
+                            local: true
+                            start_value: 25
+                            end_value: 27
+                            color_start: green
+                            color_end: lightgreen
+                        - tick_style:
+                            local: true
+                            start_value: 27
+                            end_value: 29
+                            color_start: lightgreen
+                            color_end: green
+                        - tick_style:
+                            local: true
+                            start_value: 29
+                            end_value: 32
+                            color_start: green
+                            color_end: red
+                    - range_from: 230
+                      range_to: 300
+                      angle_range: 180
+                      ticks:
+                        count: 0
+                      indicators:
+                        - line:
+                            id: temperature_needle
+                            width: 8
+                            r_mod: 2
+                            value: 26
+              - obj: # to cover the middle part of meter indicator line
+                  height: 123
+                  width: 123
+                  radius: 73
+                  align: CENTER
+                  border_width: 0
+                  pad_all: 0
+                  bg_color: 0xFFFFFF
+              - label:
+                  id: temperature_text
+                  text: "--.-°C"
+                  align: CENTER
+                  y: -26
+              - label:
+                  text: ${titulo_temp}
+                  align: CENTER
+                  y: -6
+                  on_short_click:
+                    then:
+                      - script.execute: screenoff
+    #---------------------------------------------------
+    - id: pagina_fluxo
+      widgets:
+        - label:
+            text: "\U000F185A"
+            y: -55
+            text_font: mdi_font
+            align: CENTER
+        - label:
+            text: ${titulo_fluxo}
+            y: -30
+            text_font: font_titulo
+            align: CENTER
+        - label:
+            id: fluxo_lbl_valor
+            text: "---"
+            text_font: font_valores
+            align: CENTER
+            y: 0
+            on_short_click:
+              then:
+                - script.execute: screenoff
+        - label:
+            id: unidade_text_fluxo
+            text: "l/H"
+            text_font: font_titulo
+            align: CENTER
+            height: 30
+            y: 30
+      
+    #---------------------------------------------------
+    - id: pagina_nivel
+      widgets:
+        - label:
+            text: "\U000F185B"
+            y: -55
+            text_font: mdi_font
+            align: CENTER
+
+        - label:
+            text: ${titulo_nivel}
+            y: -30
+            text_font: font_titulo
+            align: CENTER
+
+        - label:
+            id: nivel_lbl_valor
+            text: "--- %"
+            text_font: font_valores
+            align: CENTER
+            y: 0
+            on_short_click:
+              then:
+                - script.execute: screenoff
+    #---------------------------------------------------
+    - id: pagina_luminancia
+      widgets:
+        - label:
+            text: "\U000F17FF"
+            y: -55
+            text_font: mdi_font
+            align: CENTER
+
+        - label:
+            text: ${titulo_luminancia}
+            y: -30
+            text_font: font_titulo
+            align: CENTER
+
+        - label:
+            id: Luminancia_Valor
+            text: "--- lux"
+            text_font: font_valores
+            align: CENTER
+            y: 0
+            on_short_click:
+              then:
+                - script.execute: screenoff
