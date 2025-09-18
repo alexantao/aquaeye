@@ -1,22 +1,23 @@
+#  Before upload, check entities names to see if they are the name as in HomeAssistant
+
 substitutions:
-  device_name: "display-aquario-yuri"
-  friendly_name: "Display Aquário Yuri"
-  dns: "display-aquario-yuri.casa"
-  titulo_home: "Aquário Yuri"
-  titulo_temp: "Temperatura"
-  titulo_fluxo: "Fluxo Canister"
-  titulo_luz: "Iluminação"
-  titulo_luminancia: "Luminância"
-  titulo_nivel: "Nível da Água"
+  device_name: "round-display"
+  friendly_name: "Aquarium Round Display"
+  #dns: "round-display.home"
+  titulo_home: "Aquarium Status"
+  titulo_temp: "Temperature"
+  titulo_fluxo: "Canister Flux"
+  titulo_luz: "Lights"
+  titulo_luminancia: "Luminancy"
+  titulo_nivel: "Water Level"
   intervalo_padrao: "10s"
   pausa: "60s"
 
-
-  luz: light.yuri_dimmer
-  temp: sensor.aquaeye_yuri_temperatura
-  flux: sensor.aquaeye_yuri_fluxo_por_hora
-  level: sensor.aquaeye_yuri_nivel_da_agua
-  luminancia: sensor.aquaeye_yuri_luminancia
+  luz: light.aquarium_dimmer
+  temp: sensor.aquaeye_temperatura
+  flux: sensor.aquaeye_fluxo_por_hora
+  level: sensor.aquaeye_nivel_da_agua
+  luminancia: sensor.aquaeye_luminancia
 
   screensaver: 10 min # Timeout for how long the screen should stay on after the last interaction
   sdapin: GPIO4
