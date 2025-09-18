@@ -1,38 +1,38 @@
+# Defore install it to ESP32, verify if all names are OK. 
+
 substitutions:
-  device_name: "aquaeye-sala"
-  friendly_name: "AquaEye-Sala"
-  dns: "aquaeye-sala.casa"
+  device_name: "aquaeye"
+  friendly_name: "AquaEye"
+  #dns: "aquaeye.casa"
 
-  # TEMPOS DOS SENSORES
-  flux_time: "60"
-  ph_time: "60s"
-  temp_time: "60s"
-  level_time: "60s"
 
-  # PINOS 
-  flux_pin: "GPIO10"
+# PINs as the project on EASYEDA
+  dist_pin_eco: "GPIO4"
+  dist_pin_trig: "GPIO3"
   temp_pin: "GPIO1"
-  dist_pin_eco: "GPIO3"
-  dist_pin_trig: "GPIO4"
-  ph_pin:  "GPIO2"
   scl_pin: "GPIO9"
   sda_pin: "GPIO8"
+  flux_pin: "GPIO10"
+  falha_pin: "GPIO0"            # Fail PIN
+  alerta_pin: "GPIO20"          # Alert light
+  ph_pin: "GPIO2"
+
+  nivel_time: "20s"
+  temp_time: "60s"
+  flux_time: "60"
+  ph_time: "60s"
+  luz_tempo: "60s"
 
 packages: 
-  device_base: !include common/device_base.yaml
-  wifi: !include common/wifi.yaml
+  device_base: !include device_base.yaml    # Device Base contains general configurations common to all my devices
+  wifi: !include wifi.yaml                  # WIFI configuration
 
 ######################################################################
-
 esp32:
   board: esp32-c3-devkitm-1
   variant: ESP32C3
-
   framework:
     type: esp-idf
-    sdkconfig_options:
-      CONFIG_BT_BLE_42_FEATURES_SUPPORTED: y
-      CONFIG_BT_BLE_50_FEATURES_SUPPORTED: n
 
 external_components:
   - source: github://pr#7942
@@ -40,26 +40,12 @@ external_components:
     components:
       - adc
 ######################################################################
-
-esp32_ble_tracker:
-  scan_parameters:
-    active: true
-    interval: 1100ms
-    window: 1100ms
-    
-
-bluetooth_proxy:
-  active: true
-
-xiaomi_ble:
-######################################################################
 wifi:
   output_power: 8.5dB
 
   # Example configuration entry
 logger:
   level: DEBUG
-
 ####################################################################
 globals:
   - id: retorno
@@ -68,7 +54,7 @@ globals:
   - id: freq_fluxo                 # pulses per second per litre/minute of flow
     type: float
     restore_value: yes
-    initial_value: "6.6"
+    initial_value: "5"
   - id: sonic_offset                # Offset do Sensor até a água quando o tanque está cheio (em mm)
     type: int
     restore_value: yes
@@ -139,12 +125,50 @@ display:
           it.printf(64, 0, id(ftitulo), TextAlign::TOP_CENTER, "PH");
           it.printf(64, 32, id(bigdados), TextAlign::CENTER, "%.1f", id(ph_aquario).state);
 
+      - id: pagina_lux
+        lambda: |-
+          it.printf(64, 0, id(ftitulo), TextAlign::TOP_CENTER, "LUX");
+          it.printf(64, 32, id(bigdados), TextAlign::CENTER, "%.1f", id(lux_aquario).state);
+
 interval:
   - interval: 5s
     then:
       - display.page.show_next: tela
       - component.update: tela
 
+#=========================================================
+# LED de ALERTA
+# Defina o LED de alerta
+light:
+  - platform: binary
+    internal: true
+    name: "LED Alerta Sensores"
+    id: led_alerta
+    output: led_alerta_output
+
+output:
+  - platform: gpio
+    pin: ${alerta_pin}
+    id: led_alerta_output
+
+binary_sensor:
+  - platform: gpio
+    pin:
+      number: ${falha_pin}  # Altere para o pino que você usou
+      mode: INPUT_PULLUP
+      inverted: true  # O pino FLAG do TPS2553 se torna LOW em caso de falha.
+    name: "Curto Circuito"
+    entity_category: "diagnostic"
+    # Adicione uma automação para quando o sensor detectar um curto
+    on_press:
+      - light.turn_on:
+          id: led_alerta
+          state: true
+      - homeassistant.service:
+          service: persistent_notification.create
+          data:
+            message: "Curto-circuito detectado nos sensores!"
+            title: "Alerta de Curto-Circuito"
 #=========================================================
 # Example configuration entry
 button:
@@ -164,7 +188,7 @@ sensor:
   #------------------------------------------------------------#
   - platform: homeassistant
     id: ha_freq_fluxo
-    entity_id: input_number.freq_fluxo_sala
+    entity_id: input_number.freq_fluxo_yuri
     on_value:
       then:
         if:
@@ -181,7 +205,7 @@ sensor:
   #------------------------------------------------------------#
   - platform: homeassistant
     id: ha_sonic_offset
-    entity_id: input_number.sonic_offset_sala
+    entity_id: input_number.sonic_offset_yuri
     on_value:
       then:
         if:
@@ -198,7 +222,7 @@ sensor:
   #------------------------------------------------------------#
   - platform: homeassistant
     id: ha_coluna_agua_total
-    entity_id: input_number.coluna_agua_total_sala
+    entity_id: input_number.coluna_agua_total_yuri
     on_value:
       then:
         if:
@@ -215,10 +239,8 @@ sensor:
   #------------------------------------------------------------#
   - platform: homeassistant
     id: ph_aquario
-    entity_id: sensor.ph_aquario_da_sala
-    
+    entity_id: sensor.ph_aquario_da_yuri  
   #------------------------------------------------------------#
-
   - platform: dallas_temp
     name: "Temperatura"
     update_interval: "${temp_time}"
@@ -237,13 +259,14 @@ sensor:
     unit_of_measurement: "cm"
     icon: "mdi:waves-arrow-up"
     accuracy_decimals: 3
-    update_interval: ${level_time}
-    #timeout: 2.0m
-    pulse_time: 20us
+    update_interval: ${nivel_time}
+    timeout: 4.0m
+    pulse_time: 10us
     internal: true
     filters:
        - filter_out: nan
-       #- lambda: return (x * 100);
+       # HC-SR04 Returns in METERS, nothing to change.
+       - lambda: return (x / 10);       #  JSN-SR04T return in Centimeters. All calculations are on METERS ! 
     on_value:
       - sensor.template.publish:
           id: nivel
@@ -275,28 +298,21 @@ sensor:
     id: fluxo_pulsos
     internal: true
     #use_pcnt: false
-    #internal_filter: 40us
-    pin: ${flux_pin}
-    #pin:
-      #number: ${flux_pin}
-      #mode:
-        #input: true
-        #pullup: true
+    #pin: ${flux_pin}
+    pin:
+      number: ${flux_pin}
+      #inverted: true
+      mode:
+        input: true
+        pullup: true
     update_interval: "${flux_time}s"
     icon: "mdi:wave-undercurrent"
     unit_of_measurement: "pulsos"
     accuracy_decimals: 0
     filters:
       - filter_out: nan
-    on_value:                           # F = 6.68 * Q(L/min)
-      - sensor.template.publish:
-          id: fluxo_min
-          state: !lambda return ( (x / ${flux_time}) / id(freq_fluxo)  );        # Q = F / 6.68  (ajustando o tempo de coleta: Q = (F / tempo) / 6.68 = F / (tempo * 6.68)
-      - sensor.template.publish:
-          id: fluxo_hora
-          state: !lambda return ( (x / ${flux_time}) / ( id(freq_fluxo) ) ) * 60;    # O mesmo que o anterior, * 60
 
-  - platform: template
+  - platform: template            # Fluxo / Minuto
     name: "Fluxo por Min."
     device_class: volume_flow_rate
     id: fluxo_min
@@ -305,8 +321,21 @@ sensor:
     icon: "mdi:waves-arrow-right"
     filters:
         - filter_out: nan
+    lambda: |- 
+      if (id(fluxo_pulsos).state > 0) {
+        return ( (id(fluxo_pulsos).state  / ${flux_time}) / id(freq_fluxo)  ); 
+      } else {
+        return 0;
+      }
 
-  - platform: template
+  - platform: total_daily_energy
+    name: "Litros Filtrados"
+    power_id: fluxo_min
+    unit_of_measurement: "L"
+    icon: "mdi:cup-water"
+    state_class: "total_increasing"
+
+  - platform: template            # Fluxo / Hora
     name: "Fluxo por Hora"
     #device_class: volume_flow_rate
     id: fluxo_hora
@@ -315,21 +344,24 @@ sensor:
     icon: "mdi:waves-arrow-right"
     filters:
         - filter_out: nan
+    lambda: |- 
+      if (id(fluxo_pulsos).state > 0) {
+        return ( (id(fluxo_pulsos).state  / ${flux_time}) / id(freq_fluxo) ) * 60;
+      } else {
+        return 0;
+      }
 
-  - platform: integration
-    device_class: water
-    state_class: total_increasing
-    name: "Litros Filtrados"
-    unit_of_measurement: 'L'
-    accuracy_decimals: 1
-    sensor: fluxo_min
-    time_unit: min
-    icon: "mdi:cup-water"
-   #------------------------------------------------------------#
-   
+#------------------------------------------------------------#
+  - platform: bh1750
+    name: "Iluminação"
+    address: 0x23
+    update_interval: ${luz_tempo}
+    id: lux_aquario
+
+#------------------------------------------------------------#   
   - platform: adc                  # PH
     pin: ${ph_pin}
-    id: aquaeye_ads
+    id: ph
     name: "pH ads"
     update_interval: ${ph_time}
     unit_of_measurement: V
