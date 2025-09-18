@@ -1,0 +1,12 @@
+network:
+  enable_ipv6: true
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  domain: ".casa"
+    
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "ESPHOME"
+    password: "12345678"

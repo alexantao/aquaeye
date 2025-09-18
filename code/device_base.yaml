@@ -1,0 +1,38 @@
+####### DEVICE BASE #####
+esphome:
+  name: ${device_name}
+  friendly_name: ${friendly_name}
+  name_add_mac_suffix: false
+
+    #web_server:       # consome muita memória. ativar para testes apenas
+
+logger:
+  level: VERBOSE
+  initial_level: VERBOSE
+
+api:
+  reboot_timeout: 15min
+  encryption:
+    key: !secret api_key
+
+ota:
+  - platform: esphome
+    password: !secret ota_password
+
+time:
+  - platform: homeassistant
+    timezone: "America/Sao_Paulo"
+    id: homeassistant_time
+
+sensor:
+  - platform: wifi_signal
+    name: Sinal Wifi
+    update_interval: 60s
+
+  - platform: uptime
+    name: Uptime
+    unit_of_measurement: days
+    update_interval: 300s
+    accuracy_decimals: 1
+    filters:
+      - multiply: 0.000011574
