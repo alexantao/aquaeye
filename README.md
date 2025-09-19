@@ -33,10 +33,17 @@ It consists of two parts: hardware and software:
     
     These are sensors that uses sonic waves to measure the distance. I tested these three:
 
-| HC-SR04 | RCWL-1670 | SN-SR04T/AJ-SR04M |
-|:-------------:|:--------------:|:--------------:|
-| <img src="https://github.com/alexantao/aquaeye/blob/main/images/sonic1.jpeg?raw=true" width="150"> | <img src="https://github.com/alexantao/aquaeye/blob/main/images/RCWL-1670.jpg?raw=true" width="150"> | <img src="https://github.com/alexantao/aquaeye/blob/main/images/sonic2.jpeg?raw=true" width="150"> |
-| The most simple of then, the board is attached with the sensors and gives a good precision. Measures distances for at most 2 meters and minimal of about 2cm. The problem with it is that it is not waterproof, and on of then got rusty in little time. | Identical from the HR-SR04, but it claims to be water proof. Only the sensor itself, of course. The board is not.  | **DON'T USE !** This one is quite different, the sensor is water proof and the board is split from it. It's the same as those used in cars bumpers as parking sensor. The advantage is clearly the water proof design, but the board will take some extra space on the box. $${\color{red}THE PROBLEM WITH THIS SENSOR IS THAT THE MINIMUM ACURATE DISTANCE IS 20CM!}$$ |
+| HC-SR04 | RCWL-1670 |
+|:-------------:|:--------------:|
+| <img src="https://github.com/alexantao/aquaeye/blob/main/images/sonic1.jpeg?raw=true" width="150"> | <img src="https://github.com/alexantao/aquaeye/blob/main/images/RCWL-1670.jpg?raw=true" width="150"> |
+| The most simple of then, the board is attached with the sensors and gives a good precision. Measures distances for at most 2 meters and minimal of about 2cm. The problem with it is that it is not waterproof, and on of then got rusty in little time. | Identical from the HR-SR04, but it claims to be water proof. Only the sensor itself, of course. The board is not.  |
+
+### **Notes about the Sonic sensor SN-SR04T/AJ-SR04M**
+
+| | |
+|:-------------:|:--------------:|
+| <img src="https://github.com/alexantao/aquaeye/blob/main/images/sonic2.jpeg?raw=true" width="150"> |
+  **DON'T USE !** This one is quite different, the sensor is water proof and the board is split from it. It's the same as those used in cars bumpers as parking sensor. The advantage is clearly the water proof design, but the board will take some extra space on the box. $${\color{red}THE\space PROBLEM\space  WITH\space  THIS\space  SENSOR\space  IS\space  THAT\space  THE\space  MINIMUM\space  ACURATE\space  DISTANCE\space  IS\space  20CM!}$$ |
 
 **Atention:**: Verify the sensor return unit you have. HC-SR04 return distance in centimeters, JSN-SR04T returns in meters. You must adjust the code to reflect yours
 
