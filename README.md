@@ -66,7 +66,7 @@ It consists of two parts: hardware and software:
 | Support | Connectors |
 |:---:|:---:|
 | <img src="https://github.com/alexantao/aquaeye/blob/main/images/suporte-sensor.jpg?raw=true" width="150"> | <img src="https://github.com/alexantao/aquaeye/blob/main/images/connectors.png?raw=true" width="150"> |
-| I also had to print a support for the sonic sensor and temperature from <a href="https://www.thingiverse.com/thing:5439668">https://www.thingiverse.com/thing:5439668</A> | To make it portable, I decided to connect the sensors with pluggable connectors. I tested several ones, like those audio Jack. Soldering was a challenge for me. To make thing easier, I bought on Ali an magnetic connector that already comes with wires soldered. Very high quality. |
+| I also had to print a support for the sonic sensor and temperature from <a href="https://www.thingiverse.com/thing:5439668">https://www.thingiverse.com/thing:5439668</A> | To make it portable, I decided to connect the sensors with pluggable connectors. I tested several ones, like those audio Jack. Soldering was a challenge for me. To make things easier, I bought on Ali an magnetic connector that already comes with wires soldered. Very high quality. |
 
 </div>
 
