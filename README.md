@@ -1,4 +1,4 @@
-<p align="center"><img src="https://github.com/alexantao/aquaeye/blob/main/images/aquaeye-logo.jpeg?raw=true" width="350"></p>
+<p align="center"><img src="https://github.com/alexantao/aquaeye/blob/main/images/logo com borda - en.png?raw=true" width="350"></p>
 
 This is a Aquarium monitoring system. It has two essential parts:
 * **Hardware:** Circuit board, with some sensors (pH, Flux, Water Level and temperature)
