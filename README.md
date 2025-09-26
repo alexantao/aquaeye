@@ -40,11 +40,12 @@ It consists of two parts: hardware and software:
 
 ### **Notes about the Sonic sensor SN-SR04T/AJ-SR04M**
 
-| | |
-|:-------------:|:--------------:|
+| |
+|:-------------:|
 | <img src="https://github.com/alexantao/aquaeye/blob/main/images/sonic2.jpeg?raw=true" width="150"> |
   **DON'T USE !** This one is quite different, the sensor is water proof and the board is split from it. It's the same as those used in cars bumpers as parking sensor. The advantage is clearly the water proof design, but the board will take some extra space on the box.
   $${\color{red}THE\space PROBLEM\space  WITH\space  THIS\space  SENSOR\space  IS\space  THAT\space  THE\space  MINIMUM\space  ACURATE\space  DISTANCE\space  IS\space  20CM!}$$ |
+| The reason of this is that, since this sensor has only one component that serves both for TRIGGER and ECHO, it needs to change from one to another, and this transaction takes some _ms_ to make. So, if it's too close, the waves will return before it can hear the ECHO properly. |
 
 **Atention:**: Verify the sensor return unit you have. HC-SR04 return distance in centimeters, JSN-SR04T returns in meters. You must adjust the code to reflect yours
 
