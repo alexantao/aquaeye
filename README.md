@@ -49,12 +49,12 @@ It consists of two parts: hardware and software:
 **Atention:**: Verify the sensor return unit you have. HC-SR04 return distance in centimeters, JSN-SR04T returns in meters. You must adjust the code to reflect yours
 
   
-  * Flux sensor: This is to monitor the water flux the canister is sending to the aquarium. For several times I noticed a low flow, due to obstruction of even a impeller fault. With this sensor I can even predict when I need to clean the canister, because the flow gets slower. There's a lot of flow sensors on the market, some with a open/close valve e others with temperature sensor included.
+  * Flux sensor: This is to monitor the water flux the canister is sending to the aquarium. For several times I noticed a low flow, due to obstruction of even a impeller fault. With this sensor I can even predict when I need to clean the canister, because the flow gets slower. There's a lot of flow sensors on the market, some with a open/close valve e others with temperature sensor included. Each sensor has a _Factor number_ that indicates the number of pulses by liter. This factor can be configured by software (see below).
     
 | YF-B05 | YF-201c |
 |:---:|:---:|
 | <img src="https://github.com/alexantao/aquaeye/blob/main/images/yf-b05.jpeg?raw=true" width="150"> |  <img src="https://github.com/alexantao/aquaeye/blob/main/images/yf-201c.jpeg?raw=true" width="150">  |
-|  this sensor is made of metal and has a 3/4' (16mm) thread |  this sensor is made of plactis and has a 1/2' (13mm) thread |
+|  this sensor is made of metal and has a 3/4' (16mm) thread |  this sensor is made of plastics and has a 1/2' (13mm) thread |
 
 
 | PH: **PH-4502C** | OLED display **SSD1315** |
