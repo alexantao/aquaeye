@@ -76,9 +76,9 @@ The only thing you must taka a look are those 2 resistors between Flux Signal Ou
 
 <div align="center">
 
-| Schematic | PCB (top layer) | 3D view |
-|---|:---:|:---:|
-| <img src="https://github.com/alexantao/aquaeye/blob/main/images/esquematico.png?raw=true" width="150"> | <img src="https://github.com/alexantao/aquaeye/blob/main/images/2d-toplayer.png?raw=true" width="150"> | <img src="https://github.com/alexantao/aquaeye/blob/main/images/3D-PCB.png?raw=true" width="150"> |
+| Schematic | FOOTPRINT | PCB (top layer) | 3D view |
+|---|:---:|:---:|:---:|
+| <img src="https://github.com/alexantao/aquaeye/blob/main/images/esquematico.png?raw=true" width="150"> | <img src="https://github.com/alexantao/aquaeye/blob/main/images/PCB-FOOTPRINT.png?raw=true" width="150"> | <img src="https://github.com/alexantao/aquaeye/blob/main/images/2d-toplayer.png?raw=true" width="150"> | <img src="https://github.com/alexantao/aquaeye/blob/main/images/3D-PCB.png?raw=true" width="150"> |
 
 **BOOM** - Lista de Materiais
 |  Component | Detail | Quantity |
