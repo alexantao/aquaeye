@@ -84,7 +84,7 @@ The only thing you must taka a look are those 2 resistors between Flux Signal Ou
 |  Component | Detail | Quantity |
 |:---:|:---:|:---:|
 | Led SMD | LED0805-R-RD | 1 |
-| Capacitor | CAP-SMD_BD3.0-L3.3-W3.3-RD | 6 |
+| Capacitor | Ceramic 100uF 16V | 6 |
 | Diode | SMA_L4.3-W2.6-LS5.2-RD | 6 |
 | Conector | CONN-TH_PH2.0D-L-3P | 3 |
 | Conector | CONN-TH_WAFER-PH2.0-2PZZ-Y62 | 2 |
