@@ -115,6 +115,7 @@ Since it it touch, I integrated controls, like light, UV, air, etc...
 </div>
 
 The code for the display is in the code directory of this git (round-display.yaml).
+**Don't forget to allow actions from the display to HomeAssistant Instance, or the command buttons will not work !**
 
 # **PROJECT FILES AND ESPHOME CODE**
 
