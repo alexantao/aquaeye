@@ -105,17 +105,16 @@ The only thing you must taka a look are those 2 resistors between Flux Signal Ou
 </div>
 
 # OPTIONAL DISPLAY
-As an optional display, I bought a 1.28 inches round IPS Smart Display powered by a ESP32, with Wifi and Bluetooth integrated, 240*240 resolution awith touch control.
-This display is autonomous and is not part of the AquaEye, but it eases a lot data visualization. You only need a USB-C cable to power it and it takes all information from HomeAssistant. 
-Since it it touch, I can integrate controls, like light, UV, etc... 
-
-I glued it on my aquarium glass and eliminated the need of a buttom. 
+As an optional display, I bought a 1.28 inches round IPS Smart Display powered by a ESP32-C3. Wifi and Bluetooth integrated, 240*240 resolution and alsowith touch control.
+This display is autonomous and is not part of the AquaEye, but it eases a lot data visualization, and with it, there's no need of an extra button to control the aquarium devices.
+All you only need is a USB-C cable to power it, And it takes all information from HomeAssistant. 
+Since it it touch, I integrated controls, like light, UV, air, etc... 
 
 <div align=center>
 <img src="https://github.com/alexantao/aquaeye/blob/main/images/round-display.jpeg?raw=true" width="150">
 </div>
 
-The code for the display is in the code directory of this git.
+The code for the display is in the code directory of this git (round-display.yaml).
 
 # **PROJECT FILES AND ESPHOME CODE**
 
