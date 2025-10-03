@@ -119,7 +119,7 @@ The code for the display is in the code directory of this git.
 
 # **PROJECT FILES AND ESPHOME CODE**
 
-  The circuit board, as it has a ESP32 core, it needs a firmware to run. I choose to run ESPHOME, because it is very easy to work woth and it is HomeAssistant compatible and easy to integrate.
+  The circuit board, since it's core is a ESP32, it needs a firmware to run. I choose to run ESPHOME, because it is very easy to work woth and it is HomeAssistant compatible and easy to integrate.
 The files included inside this GitHub are in <a href="https://github.com/alexantao/aquaeye/tree/main/code">code directory</a>:
 * **aquaeye.yaml:** the ESPHome code I used to program the device
 * **Gerber-.zip:** the gerber files to use
