@@ -1,23 +1,30 @@
-#  Before upload, check entities names to see if they are the name as in HomeAssistant
-
 substitutions:
-  device_name: "round-display"
-  friendly_name: "Aquarium Round Display"
-  #dns: "round-display.home"
-  titulo_home: "Aquarium Status"
-  titulo_temp: "Temperature"
-  titulo_fluxo: "Canister Flux"
-  titulo_luz: "Lights"
-  titulo_luminancia: "Luminancy"
-  titulo_nivel: "Water Level"
-  intervalo_padrao: "10s"
-  pausa: "60s"
+  device_name: "display-aquario-sala"
+  friendly_name: "Display Aquário Sala"
+  dns: "display-aquario-sala.casa"
 
-  luz: light.aquarium_dimmer
-  temp: sensor.aquaeye_temperatura
-  flux: sensor.aquaeye_fluxo_por_hora
-  level: sensor.aquaeye_nivel_da_agua
-  luminancia: sensor.aquaeye_luminancia
+  # Internationalization: modify this to your needs
+  title_home: "Aquário Sala"
+  title_temp: "Temperatura"
+  title_flux: "Fluxo Canister"
+  title_light: "Iluminação"
+  title_nivel: "Nível da Água"
+  title_loading: "Carregando..."
+  title_luminance: "Luminância"
+  title_luz: "Luz"
+  change_page_timer: "10s"
+  pausa: "60s"
+  temp_unit: "ºC"
+
+  light_entity: light.yuri_dimmer
+  temp: sensor.aquaeye_yuri_temperatura
+  flux: sensor.aquaeye_yuri_fluxo_por_hora
+  level: sensor.aquaeye_yuri_nivel_da_agua
+  luminancia: sensor.aquaeye_yuri_luminancia
+  air_entity: switch.aquario_sala_aeracao
+  circ_entity: switch.circulacao_aquario
+  uv_entity: switch.aquario_sala_uv
+
 
   screensaver: 10 min # Timeout for how long the screen should stay on after the last interaction
   sdapin: GPIO4
@@ -31,6 +38,7 @@ substitutions:
   cspin: GPIO10
 
 ######################################################################
+esphome:
   on_boot: 
     - priority: -100
       then:
@@ -93,11 +101,13 @@ font:
     glyphs:
       - "\U000F050F" # Example: mdi-thermometer
       - "\U000F05A9" # Example: mdi-wifi
-      - "\U000F185A" # Fluxo
+      - "\U000F185A" # Flux
       - "\U000F07D0" # HASSIO
-      - "\U000F185B" # Nivel
-      - "\U000F0599" # Luz
-      - "\U000F17FF" # Luminancia
+      - "\U000F185B" # Level
+      - "\U000F0599" # Light
+      - "\U000F05E3" # Air Bubbles
+      - "\U000F04E6" # Circulation
+      - "\U000F17FE" # UV Light
       
       
 
@@ -195,7 +205,7 @@ sensor:
 
   - platform: homeassistant
     id: light_brightness
-    entity_id: ${luz}
+    entity_id: ${light_entity}
     attribute: brightness
     filters:      
     on_value:
@@ -287,7 +297,7 @@ display:
       ignore_strapping_warning: true
     invert_colors: true
     update_interval: 2s
-    rotation: 180
+    #rotation: 180
 
 touchscreen:
   - platform: cst816
@@ -295,8 +305,8 @@ touchscreen:
     interrupt_pin: $tint
     transform:
       swap_xy: false
-      mirror_x: true
-      mirror_y: true
+      mirror_x: false
+      mirror_y: false
     on_update:
       - script.execute: screentime
       - lambda: |-
@@ -312,7 +322,7 @@ interval:
     then:
       lambda: 'id(pagina_pausada) == false;'
 
-  - interval: ${intervalo_padrao} # Change page every 10 seconds
+  - interval: ${change_page_timer} # Change page every 10 seconds
     then:
       - if:
           condition:
@@ -363,7 +373,7 @@ lvgl:
                   then:
                     lvgl.page.next:
       - label: 
-          text: ${titulo_home}
+          text: ${title_home}
           id: lbl_tithome
           text_font: font_titulo
           hidden: false
@@ -436,7 +446,7 @@ lvgl:
             text_font: mdi_font
             align: CENTER
         - label:
-            text: ${titulo_luz}
+            text: ${title_luz}
             y: -35
             text_font: font_titulo
             align: CENTER
@@ -467,7 +477,7 @@ lvgl:
               - homeassistant.action:
                   action: light.turn_on
                   data:
-                    entity_id: ${luz}
+                    entity_id: ${light_entity}
                     brightness: !lambda |-
                       if (isnan(x)) {
                         // Handle NaN case, e.g., return a default value or log a message
@@ -552,7 +562,7 @@ lvgl:
                   align: CENTER
                   y: -26
               - label:
-                  text: ${titulo_temp}
+                  text: ${title_temp}
                   align: CENTER
                   y: -6
                   on_short_click:
@@ -567,7 +577,7 @@ lvgl:
             text_font: mdi_font
             align: CENTER
         - label:
-            text: ${titulo_fluxo}
+            text: ${title_flux}
             y: -30
             text_font: font_titulo
             align: CENTER
@@ -598,7 +608,7 @@ lvgl:
             align: CENTER
 
         - label:
-            text: ${titulo_nivel}
+            text: ${title_nivel}
             y: -30
             text_font: font_titulo
             align: CENTER
@@ -622,7 +632,7 @@ lvgl:
             align: CENTER
 
         - label:
-            text: ${titulo_luminancia}
+            text: ${title_luminance}
             y: -30
             text_font: font_titulo
             align: CENTER
@@ -636,3 +646,58 @@ lvgl:
             on_short_click:
               then:
                 - script.execute: screenoff
+
+     #---------------------------------------------------
+    - id: page_controls
+      widgets:
+        - buttonmatrix:
+            align: CENTER
+            pad_all: 0
+            outline_width: 0
+            id: btn_control
+            text_font: mdi_font
+            items:
+              pressed:
+                bg_color: 0xFFFF00
+            rows:
+              - buttons:
+                - id: btn_air
+                  text: "\U000F05E3"
+                  on_click:
+                    then:
+                      - logger.log: "Click AIR..."
+                      - homeassistant.action:
+                          action: switch.toggle
+                          data:
+                            entity_id: ${air_entity}
+
+                - id: btn_circ
+                  text: "\U000F04E6"
+                  on_click:
+                    then:
+                      - logger.log: "Click CIRC..."
+                      - homeassistant.action:
+                          action: switch.toggle
+                          data:
+                            entity_id: ${circ_entity}
+              - buttons:
+                - id: btn_UV
+                  text: "\U000F17FE"
+                  on_click:
+                    then:
+                      - logger.log: "Click UV..."
+                      - homeassistant.action:
+                          action: switch.toggle
+                          data:
+                            entity_id: ${uv_entity}
+
+                - id: btn_light
+                  text: "\U000F0599"
+                  on_click:
+                    then:
+                      - logger.log: "Click LIGHT..."
+                      - homeassistant.action:
+                          action: light.toggle
+                          data:
+                            entity_id: ${light_entity}
+
