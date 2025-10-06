@@ -90,15 +90,13 @@ The only thing you must taka a look are those 2 resistors between Flux Signal Ou
 | Conector | CONN-TH_WAFER-PH2.0-2PZZ-Y62 | 2 |
 | Conector | CONN-TH_PH2.0-4P | 3 |
 | Regulator | AMS1117-3.3 BUCK CONVERTER BREAKOUT | 1 |
-| Resistor | R0603 100 ohms | 2 |
-| Resistor | R0603 220 ohms | 1 |
-| Resistor | R0603 1.7 Kohms | 1 |
-| Resistor | R0603 3.7 Kohms | 1 |
-| Chip | TPS2553DBVR | 1 |
-| Resistor | R0603 4.7 Kohms | 1 |
-| Module | ESP32-C3-SUPER-MINI | 1 | 
+| Resistor | R0603 100 ohms | 3 |
+| Resistor | R0603 150 ohms | 2 |
+| Resistor | R0603 470 ohms | 1 |
 | Resistor | R0603 5.1 Kohms | 1 |
-| Resistor | R0603 150 ohms | 1 |
+| Resistor | R0603 4.7 Kohms | 1 |
+| Chip | TPS2553DBVR | 1 |
+| Module | ESP32-C3-SUPER-MINI | 1 | 
 | Connector | DC-022 Jack P4 | 1 |
 | Box | Generic | 1 |
 
