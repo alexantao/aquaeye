@@ -72,7 +72,8 @@ It consists of two parts: hardware and software:
 ### **Schematic and PCB**
 
 The electronic schematic and PCB board I designed on EasyEDA. This is my very first project, so it may not be optimized and also may contain some error. 
-The only thing you must taka a look are those 2 resistors between Flux Signal Output to ESP32 pin. That's because depending on the sensor's current, they may be necessary to be adjusted. They must reduce the input voltage on ESP32 pin to 3.3V maximum. I put 2x100 ohms, because my sensors consumes 10mA and 15mA each, so the perfect resistors should be a 170ohms and a 113ohms to reduce to that voltage. Bigger should be OK if not too high, because the minimum voltage onsidered as a HIGH signal on ESP32 is 0.7V.   
+The only thing you must taka a look are those 2 resistors between Flux Signal Output to ESP32 pin. That's because depending on the sensor's current, they may be necessary to be adjusted. They must reduce the input voltage on ESP32 pin to 3.3V maximum. I put 2x100 ohms, because my sensors consumes 10mA and 15mA each, so the perfect resistors should be a 170ohms and a 113ohms to reduce to that voltage. Bigger should be OK if not too high, because the minimum voltage onsidered as a HIGH signal on ESP32 is 0.7V.
+There's also a divider for the PH sensor, to transform the voltage (VIN) to the pin (maximum 3.3v). To make thing more flexible, I put 1 Resistor for R2 (connected to Ground) and 2 for R1, connected to VIN. Those values are reference because that were the resistor I had. Feel free to chose yours.
 
 <div align="center">
 
