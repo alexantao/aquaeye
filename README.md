@@ -77,9 +77,9 @@ There's also a divider for the PH sensor, to transform the voltage (VIN) to the 
 
 <div align="center">
 
-| Schematic | FOOTPRINT | PCB (top layer) | 3D view |
-|---|:---:|:---:|:---:|
-| <img src="https://github.com/alexantao/aquaeye/blob/main/images/esquematico.png?raw=true" width="150"> | <img src="https://github.com/alexantao/aquaeye/blob/main/images/PCB-FOOTPRINT.png?raw=true" width="150"> | <img src="https://github.com/alexantao/aquaeye/blob/main/images/2d-toplayer.png?raw=true" width="150"> | <img src="https://github.com/alexantao/aquaeye/blob/main/images/3D-PCB.png?raw=true" width="150"> |
+| Schematic | FOOTPRINT | PCB (top layer) |PCB (bottom layer) | 3D view |
+|---|:---:|:---:|:---:|:---:|
+| <img src="https://github.com/alexantao/aquaeye/blob/main/images/esquematico.png?raw=true" width="150"> | <img src="https://github.com/alexantao/aquaeye/blob/main/images/PCB-FOOTPRINT.png?raw=true" width="150"> | <img src="https://github.com/alexantao/aquaeye/blob/main/images/2d-toplayer.png?raw=true" width="150"> | <img src="https://github.com/alexantao/aquaeye/blob/main/images/2d-bottomlayer.png?raw=true" width="150"> | <img src="https://github.com/alexantao/aquaeye/blob/main/images/3D-PCB.png?raw=true" width="150"> |
 
 **BOOM** - Lista de Materiais
 |  Component | Detail | Quantity |
