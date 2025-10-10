@@ -1,0 +1,1914 @@
+views:
+  - title: 'Aqua - Principal '
+    header:
+      card:
+        type: markdown
+        text_only: true
+        content: |-
+          # Aquários de Casa
+           Estado dos aquários. Clique no título de cada para maiores informações ✨
+    type: sections
+    max_columns: 2
+    icon: mdi:fishbowl-outline
+    path: aqua-home
+    sections:
+      - type: grid
+        cards:
+          - type: heading
+            heading: Sala
+            heading_style: title
+            icon: mdi:fish
+            tap_action:
+              action: navigate
+              navigation_path: /dashboard-aquarios/aquario-sala
+          - type: tile
+            entity: sensor.aquaeye_sala_fluxo_por_hora
+            name: Fluxo
+            vertical: false
+            features_position: bottom
+          - type: tile
+            entity: sensor.aquaeye_sala_temperatura
+            name: Temperatura
+            vertical: false
+            features_position: bottom
+          - type: tile
+            entity: sensor.aquaeye_sala_nivel_da_agua
+            name: Nível
+            vertical: false
+            features_position: bottom
+      - type: grid
+        cards:
+          - type: heading
+            heading: Berçário
+            heading_style: title
+            icon: mdi:baby-carriage
+            tap_action:
+              action: navigate
+              navigation_path: /dashboard-aquarios/bercario
+          - type: tile
+            entity: sensor.aquaeye_bercario_fluxo_por_hora
+            name: Fluxo
+            vertical: false
+            features_position: bottom
+          - type: tile
+            entity: sensor.aquaeye_bercario_temperatura
+            name: Temperatura
+            vertical: false
+            features_position: bottom
+          - type: tile
+            entity: sensor.aquaeye_bercario_nivel_da_agua
+            name: Nível
+            vertical: false
+            features_position: bottom
+      - type: grid
+        cards:
+          - type: heading
+            heading_style: title
+            heading: Yuri
+            tap_action:
+              action: navigate
+              navigation_path: /dashboard-aquarios/yuri
+          - type: tile
+            entity: sensor.aquaeye_yuri_fluxo_por_hora
+            name: Fluxo
+            vertical: false
+            features_position: bottom
+          - type: tile
+            entity: sensor.aquaeye_yuri_temperatura
+            name: Temperatura
+            vertical: false
+            features_position: bottom
+          - type: tile
+            entity: sensor.aquaeye_yuri_nivel_da_agua
+            name: Level
+            vertical: false
+            features_position: bottom
+          - type: tile
+            entity: sensor.aquaeye_yuri_luminancia
+    cards: []
+    background:
+      opacity: 20
+      alignment: top left
+      size: cover
+      repeat: repeat
+      attachment: fixed
+      image: /api/image/serve/b504b4303e2fb5ff8af8bc96a8b6afc8/original
+    badges:
+      - type: entity
+        show_name: true
+        show_state: false
+        show_icon: true
+        entity: binary_sensor.tz3000_k4ej3ww2_ts0207_umidade
+        name: VAZAMENTO DETECTADO !
+        show_entity_picture: false
+        color: red
+        visibility:
+          - condition: state
+            entity: binary_sensor.tz3000_k4ej3ww2_ts0207_umidade
+            state: 'on'
+      - type: entity
+        show_name: true
+        show_state: false
+        show_icon: true
+        entity: binary_sensor.vazamento_do_canister_umidade
+        name: VAZAMENTO DETECTADO !
+        show_entity_picture: false
+        color: red
+        visibility:
+          - condition: state
+            entity: binary_sensor.vazamento_do_canister_umidade
+            state: 'on'
+      - type: entity
+        show_name: true
+        show_state: true
+        show_icon: true
+        entity: sensor.aquaeye_sala_temperatura
+        name: Sala
+        show_entity_picture: false
+      - type: entity
+        show_name: true
+        show_state: true
+        show_icon: true
+        entity: sensor.aquaeye_yuri_temperatura
+        name: Yuri
+        show_entity_picture: false
+      - type: entity
+        show_name: true
+        show_state: true
+        show_icon: true
+        entity: sensor.aquaeye_bercario_temperatura
+        name: Berçário
+        show_entity_picture: false
+      - type: entity
+        show_name: true
+        show_state: false
+        show_icon: true
+        entity: input_boolean.ui_aqua_config
+        name: Configurações
+        tap_action:
+          action: toggle
+  - title: Aquário da Sala
+    path: aquario-sala
+    icon: mdi:fishbowl
+    type: sections
+    max_columns: 2
+    subview: true
+    background:
+      opacity: 28
+      alignment: center
+      size: contain
+      repeat: no-repeat
+      attachment: fixed
+      image: /local/aquario.jpg
+    sections:
+      - type: grid
+        cards:
+          - type: heading
+            heading: Painel Sala
+            heading_style: title
+            icon: mdi:alarm-panel
+          - type: picture-elements
+            image: /local/itens/aquario-fundo.png
+            elements:
+              - type: image
+                title: Aquecedor
+                tap_action:
+                  action: none
+                state_image:
+                  'on': /local/itens/aquario-aquecedor-LIG.png
+                style:
+                  z-index: 1
+                  left: '0'
+                  top: '0'
+                  transform: none
+              - type: custom:pool-monitor-card
+                display:
+                  compact: true
+                  show_labels: false
+                  show_units: false
+                  language: pt-br
+                  setpoint: 6.8
+                sensors:
+                  ph:
+                    - entity: sensor.ph_aquario_da_sala
+                style:
+                  z-index: 1
+                  top: 77%
+                  left: 50%
+                  width: 40%
+              - type: custom:fluid-level-background-card
+                entity: sensor.co2_sala_nivel
+                background_color: transparent
+                show_state: true
+                show_icon: false
+                full_value: 100
+                severity:
+                  - value: 0
+                    color: red
+                  - value: 30
+                    color: yellow
+                  - value: 80
+                    color: rgba(80, 80, 60, 1)
+                style:
+                  z-index: 3
+                  top: 78%
+                  left: 10.4%
+                  width: 6.3%
+                  height: 60%
+                card_mod:
+                  style: |
+                    ha-card {
+                      text-align: center;
+                      --ha-card-border-color: transparent !important;
+                      box-shadow: none !important;
+                      background: none !important;
+                      border-radius: 10px;
+                      overflow: hidden;
+                    }  
+                    #container, .container {
+                      width: 100% !important;
+                      height: 40% !important;
+                      position: relative !important;
+                      border-radius: 14px !important;
+                      margin-left: 0%;
+                      margin-top: 0%;
+                      opacity: 0.4;
+                      overflow: hidden;
+                    }
+                card:
+                  type: custom:button-card
+                  entity: sensor.co2_sala_nivel
+                  title_template: '{{ states(''sensor.co2_sala_nivel'')|round(0) }} %'
+                  show_header_toggle: false
+                  show_name: false
+                  show_icon: false
+                  show_title: true
+                  style:
+                    z-index: 0
+                  tap_action:
+                    action: call-service
+                    confirmation:
+                      text: Marcar hoje como dia de recarga ?
+                    service: input_datetime.set_datetime
+                    service_data:
+                      entity_id: input_datetime.dia_reabastecimento_co2_sala
+                      date: '[[[ return new Date().toLocaleDateString(''en-CA'') ]]]'
+                    value: 'off'
+                  card_mod:
+                    style: |
+                      ha-card {
+                       --ha-card-header-font-size: 20px;
+                         height: 100px !important;
+                         color: white;
+                         font-weight: 800;
+                      }
+                      .card-header {
+                       justify-content: center !important;
+                      }
+                      .name {
+                       overflow: unset !important;
+                        }
+              - type: image
+                entity: switch.alimentador_sala
+                title: Alimentar Peixinhos
+                tap_action:
+                  action: toggle
+                state_image:
+                  'on': /local/itens/feeder.png
+                  'off': /local/itens/feeder-off.png
+                  unknown: /local/itens/feeder-off.png
+                style:
+                  z-index: 3
+                  left: 12%
+                  top: 0.5%
+                  transform: scale(0.2, 0.2) translate(-50%, -50%)
+              - type: image
+                entity: switch.aquario_sala_aeracao
+                title: Aeração do Aquário
+                tap_action:
+                  action: toggle
+                state_image:
+                  'on': /local/itens/sapo-ligado.png
+                  'off': /local/itens/sapo-desligado.png
+                style:
+                  z-index: 3
+                  left: 50%
+                  top: 35%
+                  transform: scale(0.2, 0.2) translate(-50%, -50%)
+              - type: image
+                entity: switch.aquario_sala_uv
+                title: Luz UV
+                tap_action:
+                  action: toggle
+                state_image:
+                  'on': /local/itens/uv-ligada.png
+                  'off': /local/itens/uv-desligada.png
+                style:
+                  z-index: 2
+                  left: '-8%'
+                  top: '-5%'
+                  transform: scale(0.1, 0.1) translate(-50%, -50%)
+              - type: state-label
+                entity: sensor.tempo_restante_luz_da_sala
+                style:
+                  z-index: 3
+                  left: 35%
+                  top: 9%
+                  color: lightgreen
+                  font-size: 200%
+                conditions:
+                  - entity: sensor.tempo_restante_luz_da_sala
+                    state_not: '00:00'
+              - type: custom:slider-entity-row
+                entity: light.luz_do_aquario
+                style:
+                  z-index: 3
+                  left: 50%
+                  top: 9%
+                card_mod:
+                  style: |
+                    ha-card {
+                     --ha-card-header-font-size: 20px;
+                       height: 100px !important;
+                       color: white;
+                       font-weight: 800;
+                    }
+                    .card-header {
+                     justify-content: center !important;
+                    }
+                    .name {
+                     overflow: unset !important;
+                    }
+              - type: image
+                entity: light.luz_do_aquario
+                tap_action: none
+                hold_action: none
+                state_image:
+                  'on': /local/itens/luz-ligada.png
+                  'off': /local/itens/luz-desligada.png
+                style:
+                  z-index: 2
+                  top: '-12%'
+                  width: 100%
+                  transform: scale(0.7, 0.7) translate(0%, 0%)
+                  opacity: ${ vars[0] / 255.0 }
+              - type: image
+                image: /local/itens/circulação.png
+                style:
+                  z-index: 2
+                  top: 65%
+                  left: 80%
+                  height: 28%
+                  transform: scale(0.6, 0.6) translate(-50%, -50%)
+              - type: image
+                entity: switch.aquario_co2
+                title: CO2 - Clique na válvula para ligar/desligar
+                tap_action:
+                  action: toggle
+                state_image:
+                  'on': /local/itens/co2-cilindro-ON.png
+                  'off': /local/itens/co2-cilindro-OFF.png
+                style:
+                  z-index: 2
+                  top: '-10%'
+                  left: '-13%'
+                  transform: scale(0.2, 0.2) translate(-50%, -50%)
+              - type: conditional
+                conditions:
+                  - entity: input_boolean.aquaeye_ui_config
+                    state: 'on'
+                elements:
+                  - type: custom:hui-element
+                    card_type: vertical-stack
+                    cards:
+                      - type: horizontal-stack
+                        cards:
+                          - type: entities
+                            title: Sensores
+                            entities:
+                              - entity: input_number.coluna_agua_total_sala
+                                name: Coluna de Água
+                              - entity: input_number.sonic_offset_sala
+                                name: Distância do Sensor
+                              - entity: input_number.freq_fluxo_sala
+                                name: Fator do Sensor de Fluxo
+                              - entity: input_number.vazao_canister
+                                name: Vazão do Fluxo
+                          - type: entities
+                            title: Equipamentos
+                            entities:
+                              - entity: input_number.aquario_max_luz
+                                name: Máx Luz
+                              - entity: input_number.aquario_sala_tempo_circulacao
+                                name: Tempo Circ.
+                              - entity: input_number.aquario_tempo_da_aeracao
+                                name: tempo Aera.
+                              - entity: input_number.fader_luz_sala
+                                name: Tempo Fader
+                      - type: horizontal-stack
+                        cards:
+                          - type: entities
+                            title: pH - Temp Sala / Calibração
+                            entities:
+                              - entity: sensor.aquaeye_sala_ph_ads
+                                name: pH V
+                              - entity: sensor.ph_aquario_da_sala
+                              - entity: sensor.aquaeye_sala_temperatura
+                              - entity: input_boolean.calib_ph
+                          - type: entities
+                            title: Calibração pH Sala
+                            entities:
+                              - entity: input_select.c_calib_ph4
+                              - entity: input_number.v_calib_mv4
+                                name: mV4
+                              - type: divider
+                              - entity: input_select.c_calib_ph7
+                              - entity: input_number.v_calib_mv7
+                                name: mV7
+                              - type: divider
+                              - entity: input_select.c_calib_ph9_10
+                              - entity: input_number.v_calib_mv9
+                                name: mV9-10
+                            visibility:
+                              - condition: state
+                                entity: input_boolean.calib_ph
+                                state: 'on'
+                    style:
+                      z-index: 3
+                      top: 35%
+                      left: 30%
+              - type: custom:button-card
+                entity: input_boolean.aquaeye_ui_config
+                icon: mdi:tune-vertical
+                show_title: false
+                show_name: false
+                title: Configurações
+                tap_action:
+                  action: toggle
+                style:
+                  z-index: 3
+                  top: 5%
+                  left: 5%
+                  height: 8%
+                styles:
+                  icon:
+                    - width: 40%
+                    - color: red
+                card_mod:
+                  style: |
+                    ha-card {
+                      text-align: center;
+                      --ha-card-border-color: transparent !important;
+                      box-shadow: none !important;
+                      background: none !important;
+                      border-radius: 10px;
+                      overflow: hidden;
+                    }
+              - type: custom:button-card
+                entity: switch.circulacao_aquario
+                icon: mdi:fan
+                show_name: false
+                title: Liga/Desliga Circulação
+                style:
+                  z-index: 3
+                  top: 67.5%
+                  left: 82%
+                  height: 8%
+                styles:
+                  icon:
+                    - width: 40%
+                  card:
+                    - '--mdc-ripple-press-opacity': 0
+                state:
+                  - value: 'on'
+                    styles:
+                      icon:
+                        - animation: rotating 1s linear infinite
+                        - color: green
+                  - value: 'off'
+                    styles:
+                      icon:
+                        - animation: none
+                        - color: red
+                card_mod:
+                  style: |
+                    ha-card {
+                      text-align: center;
+                      --ha-card-border-color: transparent !important;
+                      box-shadow: none !important;
+                      background: none !important;
+                      border-radius: 10px;
+                      overflow: hidden;
+                    }
+              - type: custom:button-card
+                entity: sensor.aquaeye_sala_fluxo_por_hora
+                icon: mdi:fan
+                tap_action: none
+                tltle: Fluxo do Filtro
+                show_label: true
+                label: L/h
+                show_name: false
+                show_state: true
+                state_display: >-
+                  [[[ return Math.round(Number(entity.state)).toFixed(0); L/H
+                  ]]]
+                style:
+                  z-index: 1
+                  top: 23%
+                  left: 74%
+                  height: 8%
+                styles:
+                  label:
+                    - align-self: middle
+                    - color: black
+                  state:
+                    - align-self: middle
+                    - color: black
+                  card:
+                    - font-size: 15px
+                    - font-weight: bold
+                  icon:
+                    - color: |
+                        [[[
+                          if (entity.state < 300) return 'red';
+                          if (entity.state >= 300 && entity.state < 649) return 'orange';
+                          else return 'green';
+                        ]]]
+                    - width: 30%
+                    - animation: rotating 1s linear infinite
+                card_mod:
+                  style: |
+                    ha-card {
+                      text-align: center;
+                      --ha-card-border-color: transparent !important;
+                      box-shadow: none !important;
+                      background: none !important;
+                      border-radius: 10px;
+                      overflow: hidden;
+                    }  
+              - type: custom:bar-card
+                animation: 'on'
+                bar-card-color: transparent
+                bar-card-border-radius: 0
+                direction: up
+                entity_row: true
+                icon: false
+                max: 32
+                width: 8%
+                unit_of_measurement: ºC
+                positions:
+                  icon: 'off'
+                  name: 'off'
+                  value: outside
+                style:
+                  z-index: 1
+                  top: 38.5%
+                  left: 17.3%
+                severity:
+                  - color: Red
+                    from: 0
+                    to: 24
+                  - color: Orange
+                    from: 24.1
+                    to: 25
+                  - color: Green
+                    from: 25.1
+                    to: 27.9
+                  - color: Red
+                    from: 28
+                    to: 31
+                card_mod:
+                  style: |
+                    ha-card {
+                          --ha-card-border-width: 0px;
+                          vertical-align: middle;
+                          text-align: center;
+                    }
+                    bar-card-value {
+                      margin-top: auto;
+                      font-size: 16px;
+                      font-weight: bold;
+                      text-shadow: 1px 1px #0005;
+                      text-orientation: mixed;
+                      transform-origin: 0 0;
+                      transform: rotate(270deg);
+                      color: black;
+                    }
+                    bar-card-max {
+                      margin: 0px;
+                      margin-left: auto;
+                      margin-top: -20px;
+                      top: 10px;
+                    }
+                entities:
+                  - entity: sensor.aquaeye_sala_temperatura
+              - type: custom:fluid-level-background-card
+                entity: sensor.aquaeye_sala_nivel_da_agua
+                fill_entity: switch.aquario_sala_aeracao
+                background_color: transparent
+                show_state: true
+                show_icon: false
+                camera_view: auto
+                level_color: rgba(82, 171, 255, 1)
+                style:
+                  z-index: 2
+                  top: 80%
+                  left: 65%
+                  width: 100%
+                  height: 110%
+                card_mod:
+                  style: |
+                    ha-card {
+                      text-align: center;
+                      --ha-card-border-color: transparent !important;
+                      box-shadow: none !important;
+                      background: none !important;
+                      border-radius: 10px;
+                      overflow: hidden;
+                    }  
+                    #container, .container {
+                      width: 71% !important;
+                      height: 40% !important;
+                      position: relative !important;
+                      border-radius: 14px !important;
+                      margin-left: 0%;
+                      margin-top: 0%;
+                      opacity: 0.4;
+                      overflow: hidden;
+                    }
+                card:
+                  type: custom:card-templater
+                  card:
+                    type: entity
+                    entity: sensor.aquaeye_sala_nivel_da_agua
+                    title_template: '{{ states(''''sensor.aquaeye_sala_nivel'''')|round(0) }} %'
+                    unit_of_measurement: '%'
+                    show_header_toggle: false
+                    show_name: false
+                    show_icon: false
+                    show_title: true
+                    name: ' '
+                    positions:
+                      value: 'off'
+                    card_mod:
+                      style: |
+                        ha-card {
+                         --ha-card-header-font-size: 20px;
+                           height: 100px !important;
+                           color: black;
+                           font-weight: 800;
+                        }
+                        .card-header {
+                         justify-content: center !important;
+                        }
+                        .name {
+                         overflow: unset !important;
+                        }
+            grid_options:
+              columns: 24
+              rows: auto
+            visibility:
+              - condition: state
+                entity: input_boolean.ui_painel_sala
+                state: 'on'
+        column_span: 2
+      - type: grid
+        cards:
+          - type: heading
+            heading: Controles
+          - type: custom:slider-button-card
+            entity: light.luz_do_aquario
+            slider:
+              direction: left-right
+              background: gradient
+              use_state_color: true
+              use_percentage_bg_opacity: true
+              show_track: false
+              toggle_on_click: false
+              force_square: false
+              show_attribute: false
+            show_name: true
+            show_state: false
+            compact: false
+            icon:
+              show: true
+              use_state_color: true
+              tap_action:
+                action: more-info
+              icon: ''
+            action_button:
+              mode: toggle
+              icon: mdi:power
+              show: true
+              show_spinner: true
+              tap_action:
+                action: toggle
+            layout_options:
+              grid_columns: 4
+              grid_rows: auto
+          - show_name: true
+            show_icon: true
+            type: button
+            tap_action:
+              action: toggle
+            icon: mdi:gas-cylinder
+            name: CO²
+            layout_options:
+              grid_columns: 1
+              grid_rows: 2
+            entity: switch.aquario_co2
+          - show_name: true
+            show_icon: true
+            type: button
+            tap_action:
+              action: toggle
+            entity: switch.aquario_sala_aeracao
+            name: Sapão
+            icon: mdi:turtle
+            layout_options:
+              grid_columns: 1
+              grid_rows: 2
+          - show_name: true
+            show_icon: true
+            type: button
+            tap_action:
+              action: toggle
+            entity: switch.circulacao_aquario
+            name: Circulação
+            layout_options:
+              grid_columns: 1
+              grid_rows: 2
+          - show_name: true
+            show_icon: true
+            type: button
+            tap_action:
+              action: toggle
+            name: Filtro UV
+            layout_options:
+              grid_columns: 1
+              grid_rows: 2
+            entity: switch.aquario_sala_uv
+          - type: conditional
+            conditions:
+              - condition: state
+                entity: switch.alimentador_sala
+                state_not: unavailable
+            card:
+              show_name: true
+              show_icon: true
+              type: button
+              tap_action:
+                action: toggle
+              entity: switch.alimentador_sala
+              name: Alimentar
+            layout_options:
+              grid_columns: 1
+              grid_rows: 2
+          - show_name: true
+            show_icon: true
+            type: button
+            entity: switch.aquario_sala_canister
+            grid_options:
+              columns: 3
+              rows: 2
+      - type: grid
+        cards:
+          - type: heading
+            heading: Configuração
+            heading_style: title
+            icon: mdi:fishbowl
+            grid_options:
+              columns: 24
+              rows: 1
+            badges: []
+          - show_name: true
+            show_icon: true
+            show_state: false
+            type: glance
+            entities:
+              - entity: automation.dimmer_aquario_sala_ligar
+                name: Iluminação
+                tap_action:
+                  action: toggle
+              - entity: automation.co2_do_aquario_de_sala
+                name: CO²
+                tap_action:
+                  action: toggle
+              - entity: automation.aquario_uv
+                name: UV
+                tap_action:
+                  action: toggle
+              - entity: automation.circulacao_do_aquario
+                name: Circulação
+                tap_action:
+                  action: toggle
+              - entity: automation.aeracao_aquario
+                name: Aeração
+                tap_action:
+                  action: toggle
+            title: Automações
+            state_color: true
+          - type: custom:timer-bar-card
+            name: Timers
+            entities:
+              - entity: timer.timer_luz_aquario
+                name: Iluminação
+                icon: mdi:led-strip
+              - entity: timer.sala_co2
+                name: CO²
+              - entity: timer.aquario_sala_timer_circulacao
+                name: Circulação
+                icon: mdi:repeat
+              - entity: timer.aquario_sala_timer_aeracao
+                name: Aeração
+                icon: mdi:chart-bubble
+              - entity: timer.aquario_sala_uv
+                name: UV
+          - type: entities
+            entities:
+              - entity: input_datetime.sala_hora_ligar_luz
+                name: Hora de Ligar
+              - entity: input_number.aquario_max_luz
+                name: Potência Máxima
+              - entity: input_number.fader_luz_sala
+                name: Tempo do Fader
+              - entity: input_number.sala_tempo_luz
+                name: Horas de Luz
+            state_color: true
+            title: Ajustes da Iluminação
+          - type: entities
+            entities:
+              - entity: input_datetime.aquario_sala_hora_uv
+                name: Hora de Ligar
+              - entity: input_number.aquario_sala_tempo_de_uv
+                name: Tempo de UV
+            state_color: true
+            title: Luz UV
+          - type: entities
+            entities:
+              - entity: input_number.aquario_tempo_da_aeracao
+                name: Aeração
+              - entity: input_number.aquario_sala_tempo_circulacao
+                name: Circulação
+            state_color: true
+            title: Tempos da Aeração e Circulação
+          - type: entities
+            entities:
+              - entity: input_number.freq_fluxo_sala
+                name: Fator Sensor Fluxo
+                secondary_info: none
+              - entity: input_number.coluna_agua_total_sala
+                name: Coluna d'Água
+              - entity: input_number.sonic_offset_sala
+                name: Altura do Sensor
+            state_color: true
+            title: AquaEye
+          - type: entities
+            entities:
+              - entity: input_datetime.dia_reabastecimento_co2_sala
+                name: Último Reabastec.
+              - entity: input_number.duracao_co2_sala
+            state_color: true
+            title: CO²
+        column_span: 2
+        visibility:
+          - condition: state
+            entity: input_boolean.ui_sala_config
+            state: 'on'
+    cards: []
+    badges:
+      - type: entity
+        show_name: true
+        show_state: false
+        show_icon: true
+        entity: input_boolean.ui_sala_config
+        name: Configurações
+        tap_action:
+          action: toggle
+      - type: entity
+        show_name: true
+        show_state: false
+        show_icon: true
+        entity: input_boolean.ui_painel_sala
+        name: Painel
+        tap_action:
+          action: toggle
+  - title: Yuri
+    path: yuri
+    icon: mdi:fishbowl-outline
+    type: sections
+    max_columns: 2
+    subview: true
+    sections:
+      - type: grid
+        cards:
+          - type: heading
+            heading: Painel Yuri
+            heading_style: title
+          - type: picture-elements
+            image: /local/itens/aquario-fundo.png
+            grid_options:
+              columns: 24
+              rows: auto
+            elements:
+              - type: state-label
+                entity: sensor.tempo_restante_luz_yuri
+                style:
+                  z-index: 3
+                  left: 35%
+                  top: 9%
+                  color: lightgreen
+                  font-size: 200%
+                conditions:
+                  - entity: sensor.tempo_restante_luz_yuri
+                    state_not: '00:00'
+              - type: image
+                entity: light.luz_do_aquario
+                tap_action: none
+                hold_action: none
+                state_image:
+                  'on': /local/itens/luz-ligada.png
+                  'off': /local/itens/luz-desligada.png
+                style:
+                  z-index: 2
+                  top: '-12%'
+                  width: 100%
+                  transform: scale(0.7, 0.7) translate(0%, 0%)
+                  opacity: ${ vars[0] / 255.0 }
+              - type: custom:button-card
+                numeric_precision: card
+                entity: sensor.aquaeye_yuri_fluxo_por_hora
+                icon: mdi:fan
+                tap_action: none
+                tltle: Fluxo do Filtro
+                'show_label:': false
+                show_name: false
+                style:
+                  z-index: 1
+                  top: 20%
+                  left: 74%
+                  height: 8%
+                styles:
+                  card:
+                    - font-size: 15px
+                    - font-weight: bold
+                  grid:
+                    - grid-template-areas: '"i" "fluxo"'
+                    - grid-template-columns: 1fr
+                  custom_fields:
+                    fluxo:
+                      - align-self: middle
+                      - color: black
+                  icon:
+                    - color: |
+                        [[[
+                          if (entity.state < 100) return 'red';
+                          if (entity.state >= 101 && entity.state < 200) return 'orange';
+                          else return 'green';
+                        ]]]
+                    - width: 30%
+                    - animation: rotating 1s linear infinite
+                custom_fields:
+                  fluxo: |
+                    [[[
+                      return "<span>" + Math.round(entity.state) + " L/h"
+                    ]]]
+                card_mod:
+                  style: |
+                    ha-card {
+                      text-align: center;
+                      --ha-card-border-color: transparent !important;
+                      box-shadow: none !important;
+                      background: none !important;
+                      border-radius: 10px;
+                      overflow: hidden;
+                    }  
+              - type: custom:bar-card
+                animation: 'on'
+                bar-card-color: transparent
+                bar-card-border-radius: 0
+                direction: up
+                entity_row: true
+                icon: false
+                max: 32
+                decimal: 1
+                width: 8%
+                unit_of_measurement: ºC
+                positions:
+                  icon: 'off'
+                  name: 'off'
+                  value: outside
+                style:
+                  z-index: 1
+                  top: 38.5%
+                  left: 17.3%
+                severity:
+                  - color: Red
+                    from: 0
+                    to: 24
+                  - color: Orange
+                    from: 24.1
+                    to: 25
+                  - color: Green
+                    from: 25.1
+                    to: 27.9
+                  - color: Red
+                    from: 28
+                    to: 31
+                card_mod:
+                  style: |
+                    ha-card {
+                          --ha-card-border-width: 0px;
+                          vertical-align: middle;
+                          text-align: center;
+                    }
+                    bar-card-value {
+                      margin-top: auto;
+                      font-size: 16px;
+                      font-weight: bold;
+                      text-shadow: 1px 1px #0005;
+                      text-orientation: mixed;
+                      transform-origin: 0 0;
+                      transform: rotate(270deg);
+                      color: black;
+                    }
+                    bar-card-max {
+                      margin: 0px;
+                      margin-left: auto;
+                      margin-top: -20px;
+                      top: 10px;
+                    }
+                entities:
+                  - entity: sensor.aquaeye_yuri_temperatura
+              - type: image
+                image: /local/itens/circulação.png
+                style:
+                  z-index: 2
+                  top: 62%
+                  left: 10%
+                  height: 28%
+                  transform: scaleX(-1) scale(0.6, 0.6) translate(-50%, -50%)
+              - type: custom:button-card
+                entity: switch.yuri_circulacao
+                icon: mdi:fan
+                show_name: false
+                title: Liga/Desliga Circulação
+                style:
+                  z-index: 3
+                  top: 65%
+                  left: 18.5%
+                styles:
+                  icon:
+                    - width: 35%
+                  card:
+                    - '--mdc-ripple-press-opacity': 0
+                state:
+                  - value: 'on'
+                    styles:
+                      icon:
+                        - animation: rotating 1s linear infinite
+                        - color: green
+                  - value: 'off'
+                    styles:
+                      icon:
+                        - animation: none
+                        - color: red
+                card_mod:
+                  style: |
+                    ha-card {
+                      text-align: center;
+                      --ha-card-border-color: transparent !important;
+                      box-shadow: none !important;
+                      background: none !important;
+                      border-radius: 10px;
+                      overflow: hidden;
+                    }
+              - type: image
+                title: Aquecedor
+                image: /local/itens/aquario-aquecedor-LIG.png
+                tap_action:
+                  action: none
+                style:
+                  z-index: 1
+                  left: '0'
+                  top: '0'
+                  transform: none
+              - type: image
+                entity: switch.alimentador_yuri
+                title: Alimentar Peixinhos
+                tap_action:
+                  action: toggle
+                state_image:
+                  'on': /local/itens/feeder.png
+                  'off': /local/itens/feeder-off.png
+                  unknown: /local/itens/feeder-off.png
+                style:
+                  z-index: 3
+                  left: 12%
+                  top: 0.5%
+                  transform: scale(0.2, 0.2) translate(-50%, -50%)
+              - type: image
+                entity: switch.yuri_aeracao
+                title: Aeração do Aquário
+                tap_action:
+                  action: toggle
+                state_image:
+                  'on': /local/itens/sapo-ligado.png
+                  'off': /local/itens/sapo-desligado.png
+                style:
+                  z-index: 3
+                  left: 50%
+                  top: 35%
+                  transform: scale(0.2, 0.2) translate(-50%, -50%)
+              - type: image
+                entity: switch.yuri_uv
+                title: Luz UV
+                tap_action:
+                  action: toggle
+                state_image:
+                  'on': /local/itens/uv-ligada.png
+                  'off': /local/itens/uv-desligada.png
+                style:
+                  z-index: 2
+                  left: 77%
+                  top: 40%
+                  transform: scale(0.2, 0.2) translate(-50%, -50%)
+              - type: custom:fluid-level-background-card
+                entity: sensor.aquaeye_yuri_nivel_da_agua
+                fill_entity: switch.yuri_aeracao
+                background_color: transparent
+                show_state: true
+                show_icon: false
+                camera_view: auto
+                level_color: rgba(82, 171, 255, 1)
+                style:
+                  z-index: 2
+                  top: 80%
+                  left: 65%
+                  width: 100%
+                  height: 110%
+                card_mod:
+                  style: |
+                    ha-card {
+                      text-align: center;
+                      --ha-card-border-color: transparent !important;
+                      box-shadow: none !important;
+                      background: none !important;
+                      border-radius: 10px;
+                      overflow: hidden;
+                    }  
+                    #container, .container {
+                      width: 71% !important;
+                      height: 40% !important;
+                      position: relative !important;
+                      border-radius: 14px !important;
+                      margin-left: 0%;
+                      margin-top: 0%;
+                      opacity: 0.4;
+                      overflow: hidden;
+                    }
+                card:
+                  type: custom:card-templater
+                  card:
+                    type: entity
+                    entity: sensor.aquaeye_yuri_nivel_da_agua
+                    title_template: >-
+                      {{ states(''sensor.aquaeye_yuri_n_vel_da_agua'')|round(0)
+                      }} %
+                    unit_of_measurement: '%'
+                    show_header_toggle: false
+                    show_name: false
+                    show_icon: false
+                    show_title: true
+                    name: ' '
+                    positions:
+                      value: 'off'
+                    card_mod:
+                      style: |
+                        ha-card {
+                         --ha-card-header-font-size: 20px;
+                           height: 100px !important;
+                           color: black;
+                           font-weight: 800;
+                        }
+                        .card-header {
+                         justify-content: center !important;
+                        }
+                        .name {
+                         overflow: unset !important;
+                        }
+        column_span: 2
+        visibility:
+          - condition: state
+            entity: input_boolean.ui_painel_yuri
+            state: 'on'
+      - type: grid
+        cards:
+          - type: heading
+            heading: Tempo Real
+          - type: conditional
+            conditions:
+              - condition: state
+                entity: binary_sensor.vazamento_yuri_embaixo
+                state_not: 'off'
+              - condition: state
+                entity: binary_sensor.vazamento_yuri_embaixo
+                state: 'off'
+            card:
+              type: markdown
+              content: >-
+                Verifique o Aquário Yuri para verificar se está ocorrendo algum
+                vazamento !
+              title: VAZAMENTO DETECTADO !!!
+          - type: gauge
+            name: Temperatura
+            min: 25
+            needle: true
+            severity:
+              green: 25
+              yellow: 28
+              red: 31
+            max: 34
+            entity: sensor.aquaeye_yuri_temperatura
+            grid_options:
+              columns: 6
+              rows: 3
+          - type: gauge
+            entity: input_number.yuri_ph
+            needle: false
+            name: ' '
+            severity:
+              green: 6.2
+              yellow: 7.2
+              red: 8
+            grid_options:
+              columns: 6
+              rows: 3
+          - type: gauge
+            entity: sensor.aquaeye_yuri_fluxo_por_hora
+            name: Fluxo
+            max: 1000
+            needle: true
+            min: 0
+            grid_options:
+              columns: 6
+              rows: auto
+          - type: custom:fluid-level-background-card
+            entity: sensor.aquaeye_yuri_nivel_da_agua
+            fill_entity: switch.yuri_aeracao
+            background_color: transparent
+            camera_view: auto
+            show_state: true
+            show_icon: false
+            full_value: 100
+            severity:
+              - value: 0
+                color: red
+              - value: 50
+                color: yellow
+              - value: 80
+                color: lightgreen
+            card:
+              show_name: true
+              show_icon: true
+              type: button
+              entity: sensor.aquaeye_yuri_nivel_da_agua
+              name: Nível da Água
+              show_state: true
+            grid_options:
+              columns: 6
+              rows: auto
+          - type: entity
+            entity: sensor.aquaeye_yuri_luminancia
+      - type: grid
+        cards:
+          - type: heading
+            heading: Controles
+            heading_style: title
+            layout_options:
+              grid_columns: full
+              grid_rows: 1
+          - type: custom:slider-button-card
+            entity: light.yuri_dimmer
+            slider:
+              direction: left-right
+              background: gradient
+              use_state_color: true
+              use_percentage_bg_opacity: false
+              show_track: false
+              toggle_on_click: false
+              force_square: false
+              show_attribute: false
+            show_name: true
+            show_state: true
+            compact: false
+            icon:
+              show: true
+              use_state_color: true
+              tap_action:
+                action: more-info
+            action_button:
+              mode: toggle
+              icon: mdi:power
+              show: true
+              show_spinner: true
+              tap_action:
+                action: toggle
+            name: 'Iluminação '
+          - show_name: true
+            show_icon: true
+            type: button
+            tap_action:
+              action: toggle
+            name: Luz UV
+            entity: switch.yuri_uv
+            layout_options:
+              grid_columns: 1
+              grid_rows: 2
+          - show_name: true
+            show_icon: true
+            type: button
+            tap_action:
+              action: toggle
+            name: Circulação
+            entity: switch.yuri_circulacao
+            layout_options:
+              grid_columns: 1
+              grid_rows: 2
+          - show_name: true
+            show_icon: true
+            type: button
+            tap_action:
+              action: toggle
+            entity: switch.yuri_aeracao
+            name: Aeração
+            show_state: false
+            layout_options:
+              grid_columns: 1
+              grid_rows: 2
+          - show_name: true
+            show_icon: true
+            type: button
+            tap_action:
+              action: toggle
+            entity: switch.yuri_co2
+            show_state: false
+            layout_options:
+              grid_columns: 1
+              grid_rows: 2
+          - type: conditional
+            conditions:
+              - condition: state
+                entity: switch.alimentador_yuri
+                state_not: unavailable
+            card:
+              show_name: true
+              show_icon: true
+              type: button
+              tap_action:
+                action: toggle
+              entity: switch.alimentador_yuri
+              name: Alimentar
+            layout_options:
+              grid_columns: 2
+              grid_rows: 2
+          - show_name: true
+            show_icon: true
+            type: button
+            entity: switch.yuri_filtro
+            name: 'Canister '
+            grid_options:
+              columns: 3
+              rows: 2
+          - show_name: true
+            show_icon: true
+            type: button
+            entity: switch.yuri_iluminacao
+            name: Tomada da Luz
+            grid_options:
+              columns: 3
+              rows: 2
+          - type: custom:slider-button-card
+            entity: light.yuri_painel
+            slider:
+              direction: left-right
+              background: gradient
+              use_state_color: true
+              use_percentage_bg_opacity: false
+              show_track: false
+              toggle_on_click: false
+              force_square: false
+              show_attribute: false
+            show_name: true
+            show_state: true
+            compact: true
+            icon:
+              show: true
+              use_state_color: true
+              tap_action:
+                action: more-info
+              icon: ''
+            action_button:
+              mode: toggle
+              icon: mdi:power
+              show: true
+              show_spinner: true
+              tap_action:
+                action: toggle
+            name: Painel de Fundo
+            show_attribute: false
+            attribute: rgb_color
+          - type: custom:slider-button-card
+            entity: light.yuri_led_prateleira
+            slider:
+              direction: left-right
+              background: gradient
+              use_state_color: true
+              use_percentage_bg_opacity: false
+              show_track: false
+              toggle_on_click: false
+              force_square: false
+              show_attribute: false
+            show_name: true
+            show_state: true
+            compact: true
+            icon:
+              show: true
+              use_state_color: true
+              tap_action:
+                action: more-info
+              icon: ''
+            action_button:
+              mode: toggle
+              icon: mdi:power
+              show: true
+              show_spinner: true
+              tap_action:
+                action: toggle
+            show_attribute: false
+            name: Led Prateleira
+      - type: grid
+        cards:
+          - type: heading
+            heading: Histórico
+          - type: custom:mini-graph-card
+            entities:
+              - entity: sensor.aquaeye_yuri_temperatura
+                state_adaptive_color: true
+            name: Temperatura
+            hours_to_show: 168
+            points_per_hour: 1
+            hour24: true
+            show:
+              fill: true
+              extrema: true
+            color_thresholds:
+              - value: 6.2
+                color: green
+              - value: 7.2
+                color: yellow
+              - value: 8
+                color: red
+          - type: custom:mini-graph-card
+            entities:
+              - entity: input_number.yuri_ph
+                state_adaptive_color: true
+            name: pH
+            hours_to_show: 168
+            points_per_hour: 1
+            hour24: true
+            show:
+              fill: true
+              extrema: true
+            color_thresholds:
+              - value: 6.2
+                color: green
+              - value: 7.2
+                color: yellow
+              - value: 8
+                color: red
+          - type: custom:mini-graph-card
+            entities:
+              - entity: input_number.yuri_amonia
+              - entity: input_number.yuri_nitritos
+                state_adaptive_color: true
+            name: Amônia e Nitritos
+            hours_to_show: 168
+            points_per_hour: 1
+            hour24: true
+            show:
+              fill: true
+              extrema: true
+        column_span: 2
+      - type: grid
+        cards:
+          - type: heading
+            heading: Configuração
+            heading_style: title
+            icon: mdi:fishbowl-outline
+            grid_options:
+              columns: 24
+              rows: 1
+            badges: []
+          - show_name: true
+            show_icon: true
+            show_state: false
+            type: glance
+            entities:
+              - entity: automation.yuri_iluminacao
+                name: Iluminação
+                tap_action:
+                  action: toggle
+              - entity: automation.yuri_co2
+                name: CO²
+                tap_action:
+                  action: toggle
+              - entity: automation.yuri_luz_uv
+                name: UV
+                tap_action:
+                  action: toggle
+              - entity: automation.yuri_circulacao
+                name: Circulação
+                tap_action:
+                  action: toggle
+              - entity: automation.yuri_aeracao
+                name: Aeração
+                tap_action:
+                  action: toggle
+            title: Automações
+            state_color: true
+          - type: custom:timer-bar-card
+            name: Timers
+            entities:
+              - entity: timer.yuri_timer_de_iluminacao
+                name: Iluminação
+                icon: mdi:led-strip
+              - entity: timer.yuri_co2
+                name: CO²
+              - entity: timer.yuri_circulacao
+                name: Circulação
+                icon: mdi:repeat
+              - entity: timer.yuri_circulacao
+                name: Aeração
+                icon: mdi:chart-bubble
+              - entity: timer.yuri_timer_uv
+                name: UV
+          - type: entities
+            entities:
+              - entity: input_datetime.yuri_hora_ligar_luz
+                name: Hora de Ligar
+              - entity: input_number.yuri_max_luz
+                name: Potência Máxima
+              - entity: input_number.yuri_tempo_fader
+                name: Tempo do Fader
+              - entity: input_number.yuri_tempo_luz
+                name: Horas de Luz
+            state_color: true
+            title: Ajustes da Iluminação
+          - type: entities
+            entities:
+              - entity: input_datetime.yuri_hora_uv
+                name: Hora de Ligar
+              - entity: input_number.yuri_tempo_de_uv
+                name: Tempo de UV
+            state_color: true
+            title: Luz UV
+          - type: entities
+            entities:
+              - entity: input_number.yuri_tempo_de_aeracao
+                name: Aeração
+              - entity: input_number.yuri_tempo_de_circulacao
+                name: Circulação
+            state_color: true
+            title: Tempos da Aeração e Circulação
+          - type: entities
+            entities:
+              - entity: input_number.freq_fluxo_yuri
+                name: Fator Sensor Fluxo
+                secondary_info: none
+              - entity: input_number.coluna_agua_total_yuri
+                name: Coluna d'Água
+              - entity: input_number.sonic_offset_yuri
+                name: Altura do Sensor
+              - entity: input_number.aquaeye_yuri_luminancia_com_sol
+                name: Luz com Sol
+            state_color: true
+            title: AquaEye
+          - type: entities
+            entities:
+              - entity: input_datetime.dia_reabastecimento_co2_yuri
+                name: Último Reabastec.
+              - entity: input_number.duracao_co2_yuri
+            state_color: true
+            title: CO²
+        column_span: 2
+        visibility:
+          - condition: state
+            entity: input_boolean.ui_yuri_config
+            state: 'on'
+    cards: []
+    background:
+      opacity: 31
+      alignment: center
+      size: cover
+      repeat: no-repeat
+      attachment: scroll
+      image: /api/image/serve/66d4ce71c7e01cd0ce56a084f98ba722/original
+    badges:
+      - type: entity
+        show_name: true
+        show_state: false
+        show_icon: true
+        entity: input_boolean.ui_yuri_config
+        name: Configurações
+        tap_action:
+          action: toggle
+      - type: entity
+        show_name: true
+        show_state: false
+        show_icon: true
+        entity: input_boolean.ui_painel_yuri
+        name: Painel
+        tap_action:
+          action: toggle
+  - title: Berçário
+    path: bercario
+    icon: mdi:fish
+    background:
+      opacity: 33
+      alignment: center
+      size: cover
+      repeat: no-repeat
+      attachment: scroll
+      image: /local/bercario.jpg
+    subview: true
+    cards: []
+    type: sections
+    sections:
+      - type: grid
+        cards:
+          - type: heading
+            heading: Staus
+          - type: custom:config-template-card
+            entities:
+              - sensor.aquaeye_bercario_temperatura
+            card:
+              type: gauge
+              severity:
+                green: 25
+                yellow: 28
+                red: 29.5
+              needle: true
+              min: 25
+              max: 31
+              entity: sensor.aquaeye_bercario_temperatura
+              name: Temperatura
+            grid_options:
+              columns: 6
+              rows: 3
+          - type: gauge
+            entity: input_number.bercario_dureza_da_agua
+            name: Dureza (GH)
+            unit: mg/L
+            min: 0
+            max: 320
+            needle: true
+            segments:
+              - from: 0
+                color: '#91cae0'
+              - from: 25
+                color: '#c9b2da'
+              - from: 75
+                color: '#a979cc'
+              - from: 150
+                color: '#9454c4'
+              - from: 300
+                color: '#5b0d95'
+            grid_options:
+              columns: 6
+              rows: 3
+          - type: gauge
+            entity: input_number.bercario_nitritos
+            name: Nitritos
+            unit: mg/L
+            min: 0
+            max: 11
+            needle: true
+            segments:
+              - from: 0
+                color: white
+              - from: 1
+                color: lightpink
+              - from: 5
+                color: '#f09696'
+              - from: 10
+                color: '#ce5d5d'
+            layout_options:
+              grid_columns: 2
+              grid_rows: auto
+          - type: gauge
+            entity: input_number.bercario_nitratos_no3
+            name: Nitratos
+            unit: mg/L
+            min: 0
+            max: 280
+            needle: true
+            segments:
+              - from: 0
+                color: lightgray
+              - from: 10
+                color: '#ffedeb'
+              - from: 25
+                color: '#f5dfdd'
+              - from: 50
+                color: '#f9ceca'
+              - from: 100
+                color: '#f6958c'
+              - from: 250
+                color: '#f1685b'
+            layout_options:
+              grid_columns: 2
+              grid_rows: auto
+      - type: grid
+        cards:
+          - type: heading
+            heading: Controles
+          - type: custom:slider-button-card
+            entity: light.bercario_dimmer
+            slider:
+              direction: left-right
+              background: gradient
+              use_state_color: true
+              use_percentage_bg_opacity: true
+              show_track: false
+              toggle_on_click: false
+              force_square: false
+              show_attribute: false
+            show_name: true
+            show_state: false
+            compact: false
+            icon:
+              show: true
+              use_state_color: true
+              tap_action:
+                action: more-info
+              icon: ''
+            action_button:
+              mode: toggle
+              icon: mdi:power
+              show: true
+              show_spinner: true
+              tap_action:
+                action: toggle
+            show_attribute: true
+            name: Iluminação
+          - show_name: true
+            show_icon: true
+            type: button
+            tap_action:
+              action: toggle
+            icon: mdi:webcam
+            show_state: true
+            theme: Caule Black Coral
+            entity: switch.uv_bercario
+            grid_options:
+              columns: 6
+              rows: 2
+            name: Câmera
+          - show_name: true
+            show_icon: true
+            type: button
+            tap_action:
+              action: toggle
+            name: Jacaré
+            icon: ''
+            theme: Caule Black Blue
+            entity: switch.bercario_aeracao
+            grid_options:
+              columns: 6
+              rows: 2
+          - type: conditional
+            conditions:
+              - condition: state
+                entity: switch.alimentador_bercario
+                state_not: unavailable
+            card:
+              show_name: true
+              show_icon: true
+              type: button
+              tap_action:
+                action: toggle
+              name: 'Alimentar '
+              show_state: false
+              entity: switch.alimentador_bercario
+            layout_options:
+              grid_columns: 2
+              grid_rows: 2
+          - show_name: true
+            show_icon: true
+            type: button
+            entity: switch.bercario_circulacao
+            name: 'Circulação '
+          - type: custom:slider-button-card
+            entity: light.bercario_painel
+            slider:
+              direction: left-right
+              background: gradient
+              use_state_color: true
+              use_percentage_bg_opacity: false
+              show_track: false
+              toggle_on_click: false
+              force_square: false
+              show_attribute: false
+            show_name: true
+            show_state: true
+            compact: true
+            icon:
+              show: true
+              use_state_color: true
+              tap_action:
+                action: more-info
+              icon: ''
+            action_button:
+              mode: toggle
+              icon: mdi:power
+              show: true
+              show_spinner: true
+              tap_action:
+                action: toggle
+      - type: grid
+        cards:
+          - type: heading
+            heading: Configuração
+            heading_style: title
+            icon: mdi:fishbowl
+            grid_options:
+              columns: 24
+              rows: 1
+            badges: []
+          - show_name: true
+            show_icon: true
+            show_state: false
+            type: glance
+            entities:
+              - entity: automation.iluminacao_do_bercario
+                name: Iluminação
+                tap_action:
+                  action: toggle
+              - entity: automation.bercario_circulacao
+                name: Circulação
+                tap_action:
+                  action: toggle
+              - entity: automation.aeracao_bercario
+                name: Aeração
+                tap_action:
+                  action: toggle
+            title: Automações
+            state_color: true
+          - type: custom:timer-bar-card
+            name: Timers
+            entities:
+              - entity: timer.timer_luz_bercario
+                name: Iluminação
+                icon: mdi:led-strip
+              - entity: timer.bercario_timer_circulacao
+                name: Circulação
+                icon: mdi:repeat
+              - entity: timer.bercario_timer_aeracao
+                name: Aeração
+                icon: mdi:chart-bubble
+          - type: entities
+            entities:
+              - entity: input_datetime.bercario_hora_ligar_luz
+                name: Hora de Ligar
+              - entity: input_number.bercario_max_luz
+                name: Potência Máxima
+              - entity: input_number.bercario_fader_luz
+                name: Tempo do Fader
+              - entity: input_number.bercario_tempo_luz
+                name: Horas de Luz
+            state_color: true
+            title: Ajustes da Iluminação
+          - type: entities
+            entities:
+              - entity: input_number.bercario_tempo_da_aeracao
+                name: Aeração
+              - entity: input_number.bercario_tempo_de_circulacao
+                name: Circulação
+            state_color: true
+            title: Tempos da Aeração e Circulação
+        column_span: 2
+        visibility:
+          - condition: state
+            entity: input_boolean.ui_bercario_config
+            state: 'on'
+    max_columns: 2
+    badges:
+      - type: entity
+        show_name: true
+        show_state: false
+        show_icon: true
+        entity: input_boolean.ui_bercario_config
+        name: Configurações
+        tap_action:
+          action: toggle
