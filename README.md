@@ -205,7 +205,7 @@ The idea is to use HA packages feature:
    ```
 4. Check and restart HomeAssistant.
 5. Copy _aquaeye-images_ directory contents to /config/www/aquaeye-images directory
-6. Add a lovelace Picture-Elements card on a new dashboard or on an existent one with the contants of the <a href="https://github.com/alexantao/aquaeye/blob/main/code/panel-card.yaml">panel-card.yaml</A> file.
+6. Add a lovelace Picture-Elements card on a new dashboard or on an existent one with the contents of the <a href="https://github.com/alexantao/aquaeye/blob/main/code/panel-card.yaml">panel-card.yaml</A> file. My lovelace Dashboard (in development)  that includes my 3 aquariums is on the code directory as the name lovelace.yaml.
 
 Enjoy
 
